@@ -742,9 +742,33 @@ footer {
 @media (max-width: 960px) {
   nav { padding: 1rem 1.5rem; }
   .nav-links { display: none; }
-  .hero { padding: 0 1.5rem 4rem; }
-  .hero-media { display: none; }
-  .hero-content { max-width: 100%; }
+
+  /* Hero — switch to column so videos stack below text */
+  .hero {
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 6rem 1.5rem 2.5rem;
+    min-height: auto;
+  }
+  .hero-content { max-width: 100%; padding-bottom: 2rem; }
+
+  /* Videos show as a scrollable row below the text */
+  .hero-media {
+    display: flex;
+    position: static;
+    transform: none;
+    width: 100%;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 2rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .hero-media::-webkit-scrollbar { display: none; }
+  .media-card-1 { width: 160px; height: 260px; flex-shrink: 0; margin-top: 0; }
+  .media-card-2 { width: 160px; height: 240px; flex-shrink: 0; }
+
   .welcome { padding: 4rem 1.5rem 3rem; }
   .bio-split, .cta-section { grid-template-columns: 1fr; }
   .bio-left { border-right: none; border-bottom: 1px solid var(--border); padding: 3rem 1.5rem; }
@@ -824,7 +848,7 @@ footer {
         <svg viewBox="0 0 24 24" width="16" height="16" fill="#000"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
       </div>
       <!-- Replace video1.mp4 with your video file -->
-      <video id="vid1" src="video1.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:none;"></video>
+      <video id="vid1" src="video1.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
       <div class="media-card-ph" id="vid1-ph">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         <span>Add video1.mp4<br>to your folder</span>
@@ -839,7 +863,7 @@ footer {
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#000" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#000" stroke="none"/></svg>
       </div>
       <!-- Replace video2.mp4 with your video file -->
-      <video id="vid2" src="video2.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:none;"></video>
+      <video id="vid2" src="video2.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
       <div class="media-card-ph" id="vid2-ph">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
         <span>Add video2.mp4<br>to your folder</span>
