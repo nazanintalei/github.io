@@ -149,25 +149,67 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
 /* Floating media cards — DCL style */
 .hero-media {
   position: relative;
-  display: flex; gap: 16px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  gap: 20px;
   z-index: 2;
 }
-.media-card {
-  border-radius: 8px;
+
+/* Circular profile frame at top of hero right */
+.hero-profile-frame {
+  width: 140px; height: 140px;
+  border-radius: 50%;
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  border: 3px solid rgba(255,255,255,0.15);
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.05), 0 12px 40px rgba(0,0,0,0.4);
+  background: #2a2a2a;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  animation: profilePop 0.8s cubic-bezier(.16,1,.3,1) 0.4s both;
+}
+.hero-profile-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top center;
+  display: none;
+}
+.hero-profile-ph {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 6px;
+  color: rgba(255,255,255,0.3); font-size: 10px; text-align: center;
+}
+@keyframes profilePop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* Video cards row */
+.hero-videos-row {
+  display: flex; gap: 16px;
+  align-items: flex-start;
+}
+
+.media-card {
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.6);
   background: #2a2a2a;
   position: relative;
 }
 .media-card-1 {
-  width: 200px; height: 340px;
-  margin-top: 60px;
+  width: 220px; height: 390px;
+  margin-top: 40px;
+  animation: cardSlideUp 0.9s cubic-bezier(.16,1,.3,1) 0.5s both;
 }
 .media-card-2 {
-  width: 220px; height: 300px;
+  width: 220px; height: 390px;
+  animation: cardSlideUp 0.9s cubic-bezier(.16,1,.3,1) 0.7s both;
 }
+@keyframes cardSlideUp {
+  from { transform: translateY(60px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
 .media-card img {
   width: 100%; height: 100%;
   object-fit: cover; display: none;
@@ -182,12 +224,13 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
   padding: 1rem;
 }
 .media-card-ph svg { opacity: 0.3; }
-/* Social icon badge — like TikTok/Instagram in DCL */
+/* Social icon badge */
 .media-badge {
-  position: absolute; top: 10px; left: 10px;
-  width: 32px; height: 32px; border-radius: 50%;
+  position: absolute; top: 12px; left: 12px;
+  width: 34px; height: 34px; border-radius: 50%;
   background: white;
   display: flex; align-items: center; justify-content: center;
+  z-index: 2;
 }
 .media-badge svg { width: 16px; height: 16px; }
 
@@ -744,31 +787,39 @@ footer {
   nav { padding: 1rem 1.5rem; }
   .nav-links { display: none; }
 
-  /* Hero — switch to column so videos stack below text */
+  /* Hero — switch to column so profile + videos stack below text */
   .hero {
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
     padding: 6rem 1.5rem 2.5rem;
     min-height: auto;
+    display: flex;
+    grid-template-columns: unset;
   }
   .hero-content { max-width: 100%; padding-bottom: 2rem; }
-
-  /* Videos show as a scrollable row below the text */
   .hero-media {
     display: flex;
     position: static;
     transform: none;
     width: 100%;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 2rem;
+  }
+  .hero-profile-frame { width: 100px; height: 100px; }
+  .hero-videos-row {
+    display: flex;
     gap: 12px;
     overflow-x: auto;
-    padding-bottom: 2rem;
+    width: 100%;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .hero-media::-webkit-scrollbar { display: none; }
+  .hero-videos-row::-webkit-scrollbar { display: none; }
   .media-card-1 { width: 160px; height: 260px; flex-shrink: 0; margin-top: 0; }
-  .media-card-2 { width: 160px; height: 240px; flex-shrink: 0; }
+  .media-card-2 { width: 160px; height: 260px; flex-shrink: 0; }
 
   .welcome { padding: 4rem 1.5rem 3rem; }
   .bio-split, .cta-section { grid-template-columns: 1fr; }
@@ -836,41 +887,46 @@ footer {
     <a href="#about" class="hero-cta">Let's Get Going <span class="hero-cta-arrow">›</span></a>
   </div>
 
-  <!-- Floating video cards — DCL style -->
+  <!-- Hero right: circular profile + two video cards -->
   <div class="hero-media">
 
-    <!-- VIDEO CARD 1
-         Replace the <video> src with your own video file, e.g. src="video1.mp4"
-         Or use a YouTube short embed — remove <video> and add:
-         <iframe src="https://www.youtube.com/embed/YOUR_ID?autoplay=1&mute=1&loop=1&playlist=YOUR_ID&controls=0" ...></iframe>
-    -->
-    <div class="media-card media-card-1">
-      <div class="media-badge media-badge-tiktok">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="#000"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
-      </div>
-      <!-- Replace video1.mp4 with your video file -->
-      <video id="vid1" src="video1.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
-      <div class="media-card-ph" id="vid1-ph">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        <span>Add video1.mp4<br>to your folder</span>
+    <!-- Circular profile picture -->
+    <div class="hero-profile-frame" id="hero-profile-wrap">
+      <img id="hero-profile-img" src="" alt="Nazanin Talei">
+      <div class="hero-profile-ph" id="hero-profile-ph">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span>profile.jpg</span>
       </div>
     </div>
 
-    <!-- VIDEO CARD 2
-         Replace src="video2.mp4" with your second video file.
-    -->
-    <div class="media-card media-card-2">
-      <div class="media-badge media-badge-ig">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#000" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#000" stroke="none"/></svg>
-      </div>
-      <!-- Replace video2.mp4 with your video file -->
-      <video id="vid2" src="video2.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
-      <div class="media-card-ph" id="vid2-ph">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-        <span>Add video2.mp4<br>to your folder</span>
-      </div>
-    </div>
+    <!-- Two video cards side by side -->
+    <div class="hero-videos-row">
 
+      <!-- VIDEO 1 — replace video1.mp4 with your file -->
+      <div class="media-card media-card-1">
+        <div class="media-badge media-badge-tiktok">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="#000"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
+        </div>
+        <video id="vid1" src="video1.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
+        <div class="media-card-ph" id="vid1-ph">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Add video1.mp4<br>to your folder</span>
+        </div>
+      </div>
+
+      <!-- VIDEO 2 — replace video2.mp4 with your file -->
+      <div class="media-card media-card-2">
+        <div class="media-badge media-badge-ig">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#000" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#000" stroke="none"/></svg>
+        </div>
+        <video id="vid2" src="video2.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
+        <div class="media-card-ph" id="vid2-ph">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Add video2.mp4<br>to your folder</span>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -1316,13 +1372,29 @@ function initVideo(vidId, phId) {
   var vid = document.getElementById(vidId);
   var ph = document.getElementById(phId);
   if (!vid || !ph) return;
-  ph.style.display = 'flex'; // show placeholder by default
+  ph.style.display = 'flex';
   vid.style.display = 'none';
   vid.addEventListener('canplay', function() { vid.style.display = 'block'; ph.style.display = 'none'; });
   vid.load();
 }
 initVideo('vid1', 'vid1-ph');
 initVideo('vid2', 'vid2-ph');
+
+// Hero circular profile loader
+(function() {
+  var exts = ['profile.jpg','profile.jpeg','profile.png','Profile.jpg','Profile.JPG','profile.JPG'];
+  var img = document.getElementById('hero-profile-img');
+  var ph = document.getElementById('hero-profile-ph');
+  var i = 0;
+  function tryNext() {
+    if (i >= exts.length) { if(ph) ph.style.display='flex'; return; }
+    var t = new Image();
+    t.onload = function() { img.src = exts[i]+'?v='+Date.now(); img.style.display='block'; if(ph) ph.style.display='none'; };
+    t.onerror = function() { i++; tryNext(); };
+    t.src = exts[i]+'?v='+Date.now();
+  }
+  tryNext();
+})();
 
 // Profile image loader
 (function() {
