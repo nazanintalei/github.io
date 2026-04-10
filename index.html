@@ -261,20 +261,24 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
   display: flex; flex-direction: column; justify-content: space-between; gap: 3rem;
 }
 .bio-right {
-  padding: 0;
+  padding: 3rem 2rem;
   overflow: hidden; position: relative;
-  min-height: 500px;
+  min-height: 400px;
   background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
 }
 .bio-right-img {
-  width: 100%; height: 100%;
+  width: 260px; height: 320px;
   object-fit: cover; display: none;
+  border-radius: 4px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
 }
 .bio-right-ph {
-  width: 100%; height: 100%; min-height: 500px;
+  width: 260px; height: 320px;
   display: flex; flex-direction: column;
   align-items: center; justify-content: center;
   gap: 10px; color: var(--muted); font-size: 12px;
+  background: var(--bg2); border-radius: 4px;
 }
 /* Red bottom stripe like DCL */
 .bio-right::after {
@@ -728,6 +732,9 @@ footer {
 /* ── SCROLL REVEAL ── */
 .rv { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.16,1,.3,1); }
 .rv.in { opacity: 1; transform: translateY(0); }
+/* Fallback: if JS is slow or file opened locally, show content after 0.5s */
+@keyframes rvFallback { to { opacity: 1; transform: none; } }
+.rv { animation: rvFallback 0s 1.5s forwards; }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 960px) {
@@ -802,30 +809,41 @@ footer {
     <a href="#about" class="hero-cta">Let's Get Going <span class="hero-cta-arrow">›</span></a>
   </div>
 
-  <!-- Floating project preview cards -->
+  <!-- Floating video cards — DCL style -->
   <div class="hero-media">
-    <!-- Card 1 — project preview 1 -->
+
+    <!-- VIDEO CARD 1
+         Replace the <video> src with your own video file, e.g. src="video1.mp4"
+         Or use a YouTube short embed — remove <video> and add:
+         <iframe src="https://www.youtube.com/embed/YOUR_ID?autoplay=1&mute=1&loop=1&playlist=YOUR_ID&controls=0" ...></iframe>
+    -->
     <div class="media-card media-card-1">
-      <div class="media-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M10 9l5 3-5 3V9z" fill="#000" stroke="none"/></svg>
+      <div class="media-badge media-badge-tiktok">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="#000"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
       </div>
-      <img src="project1.jpg" alt="AI project 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-      <div class="media-card-ph" style="display:none;">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>project1.jpg</span>
+      <!-- Replace video1.mp4 with your video file -->
+      <video id="vid1" src="video1.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:none;"></video>
+      <div class="media-card-ph" id="vid1-ph">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>Add video1.mp4<br>to your folder</span>
       </div>
     </div>
-    <!-- Card 2 — project preview 2 -->
+
+    <!-- VIDEO CARD 2
+         Replace src="video2.mp4" with your second video file.
+    -->
     <div class="media-card media-card-2">
-      <div class="media-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="#000" stroke="none"/></svg>
+      <div class="media-badge media-badge-ig">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#000" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#000" stroke="none"/></svg>
       </div>
-      <img src="project2.jpg" alt="AI project 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-      <div class="media-card-ph" style="display:none;">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-        <span>project2.jpg</span>
+      <!-- Replace video2.mp4 with your video file -->
+      <video id="vid2" src="video2.mp4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:none;"></video>
+      <div class="media-card-ph" id="vid2-ph">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <span>Add video2.mp4<br>to your folder</span>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -851,9 +869,9 @@ footer {
     </div>
     <p class="bio-body">I bridge global markets using data, creativity, and AI. With 6+ years of international consulting experience and a master's in Marketing Analytics, I build marketing systems that scale — not just campaigns that run.</p>
     <div class="contact-links">
-      <a href="mailto:nazanintalei@gmail.com">
+      <a href="/cdn-cgi/l/email-protection#b9d7d8c3d8d7d0d7cdd8d5dcd0f9ded4d8d0d597dad6d4">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        nazanintalei@gmail.com
+        <span class="__cf_email__" data-cfemail="254b445f444b4c4b514449404c654248444c490b464a48">[email&#160;protected]</span>
       </a>
       <a href="tel:9496784841">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.1-8.59A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
@@ -1227,7 +1245,7 @@ footer {
   <div class="cta-right">
     <p class="cta-sub">Open to consulting projects, strategic partnerships, and full-time opportunities in marketing strategy and analytics.</p>
     <div class="cta-btns">
-      <a href="mailto:nazanintalei@gmail.com" class="btn-wht">Get in touch</a>
+      <a href="/cdn-cgi/l/email-protection#0a646b706b6463647e6b666f634a6d676b636624696567" class="btn-wht">Get in touch</a>
       <a href="https://www.linkedin.com/in/nazanintalei" target="_blank" class="btn-bdr">LinkedIn</a>
     </div>
   </div>
@@ -1242,27 +1260,42 @@ footer {
     <div class="footer-name">Nazanin Talei</div>
   </div>
   <div class="footer-links">
-    <a href="mailto:nazanintalei@gmail.com">nazanintalei@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#b3ddd2c9d2dddaddc7d2dfd6daf3d4ded2dadf9dd0dcde"><span class="__cf_email__" data-cfemail="5d333c273c333433293c3138341d3a303c3431733e3230">[email&#160;protected]</span></a>
     <a href="tel:9496784841">949.678.4841</a>
     <a href="https://www.linkedin.com/in/nazanintalei" target="_blank">LinkedIn</a>
   </div>
   <div class="footer-bottom">© 2025 Nazanin Talei · All Rights Reserved · Built with HTML · GitHub Pages</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Nav scroll
 var nav = document.getElementById('nav');
 window.addEventListener('scroll', function() {
   nav.classList.toggle('scrolled', window.scrollY > 60);
 });
 
-// Scroll reveal
-var obs = new IntersectionObserver(function(entries) {
-  entries.forEach(function(e) {
-    if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); }
+// Scroll reveal — immediately show anything already in viewport, then observe rest
+function revealAll() {
+  document.querySelectorAll('.rv').forEach(function(el) {
+    var r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight + 40) el.classList.add('in');
   });
-}, { threshold: 0.07, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.rv').forEach(function(el) { obs.observe(el); });
+}
+revealAll();
+window.addEventListener('scroll', revealAll, { passive: true });
+
+// Video loader — show placeholder until video actually plays
+function initVideo(vidId, phId) {
+  var vid = document.getElementById(vidId);
+  var ph = document.getElementById(phId);
+  if (!vid || !ph) return;
+  ph.style.display = 'flex'; // show placeholder by default
+  vid.style.display = 'none';
+  vid.addEventListener('canplay', function() { vid.style.display = 'block'; ph.style.display = 'none'; });
+  vid.load();
+}
+initVideo('vid1', 'vid1-ph');
+initVideo('vid2', 'vid2-ph');
 
 // Profile image loader
 (function() {
@@ -1271,11 +1304,11 @@ document.querySelectorAll('.rv').forEach(function(el) { obs.observe(el); });
   var ph = document.getElementById('profile-placeholder');
   var i = 0;
   function tryNext() {
-    if (i >= exts.length) { ph.style.display = 'flex'; return; }
+    if (i >= exts.length) { if(ph) ph.style.display='flex'; return; }
     var t = new Image();
-    t.onload = function() { img.src = exts[i] + '?v=' + Date.now(); img.style.display = 'block'; ph.style.display = 'none'; };
+    t.onload = function() { img.src = exts[i]+'?v='+Date.now(); img.style.display='block'; if(ph) ph.style.display='none'; };
     t.onerror = function() { i++; tryNext(); };
-    t.src = exts[i] + '?v=' + Date.now();
+    t.src = exts[i]+'?v='+Date.now();
   }
   tryNext();
 })();
