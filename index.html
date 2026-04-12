@@ -94,6 +94,123 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
   overflow: hidden;
   gap: 0;
 }
+
+/* Particle canvas */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Hero text entrance animations */
+.hero-label   { animation: fadeUp 0.8s ease both; animation-delay: 0.2s; }
+.hero-heading { animation: fadeUp 0.9s ease both; animation-delay: 0.4s; }
+.hero-sub     { animation: fadeUp 0.9s ease both; animation-delay: 0.6s; }
+.hero-proof   { animation: fadeUp 0.9s ease both; animation-delay: 0.75s; }
+.hero-ctas    { animation: fadeUp 0.9s ease both; animation-delay: 0.9s; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Magnetic hover on profile image */
+.hero-profile-frame {
+  transition: transform 0.4s cubic-bezier(.16,1,.3,1);
+}
+
+/* Shimmer on section headers */
+.sh-title {
+  background: linear-gradient(90deg, var(--black) 0%, #555 40%, var(--black) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer {
+  from { background-position: 200% center; }
+  to   { background-position: -200% center; }
+}
+
+/* Stat counter glow */
+.stat-value {
+  position: relative;
+}
+.stat-value::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 2px;
+  background: var(--black);
+  transition: width 1.2s cubic-bezier(.16,1,.3,1);
+}
+.stat-item.counted .stat-value::after { width: 100%; }
+
+/* Pull quote sliding line */
+.pull-quote blockquote {
+  position: relative;
+  padding-left: 2rem;
+  overflow: hidden;
+}
+.pull-quote blockquote::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0;
+  width: 3px; height: 0;
+  background: var(--black);
+  transition: height 1s cubic-bezier(.16,1,.3,1);
+}
+.pull-quote.in blockquote::before { height: 100%; }
+
+/* Card hover lift */
+.who-card, .pkg-card, .tcard, .award-cell {
+  transition: transform 0.3s cubic-bezier(.16,1,.3,1), box-shadow 0.3s ease, background 0.2s;
+}
+.who-card:hover, .tcard:hover, .award-cell:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+.pkg-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+}
+
+/* Cursor spotlight on hero */
+.hero-spotlight {
+  position: absolute;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: opacity 0.3s;
+}
+
+/* Animated gradient border on contact form inputs on focus */
+.cf-input:focus, .cf-textarea:focus {
+  border-color: transparent;
+  background: rgba(255,255,255,0.09);
+  box-shadow: 0 0 0 1.5px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.06);
+}
+
+/* Floating dots decoration */
+.float-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  animation: floatDot linear infinite;
+  pointer-events: none;
+}
+@keyframes floatDot {
+  0%   { transform: translateY(0px) rotate(0deg); opacity: 0.4; }
+  50%  { opacity: 0.8; }
+  100% { transform: translateY(-120px) rotate(360deg); opacity: 0; }
+}
 .hero-content {
   position: relative; z-index: 2;
   padding: 10rem 3rem 5rem;
@@ -1366,6 +1483,8 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 
 <!-- ══ HERO ══ -->
 <section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-spotlight" id="hero-spotlight"></div>
   <div class="hero-bg"></div>
   <div class="hero-circle"></div>
 
@@ -1687,7 +1806,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
       <div class="yt-card">
         <div class="yt-frame-wrap">
           <iframe
-            src="https://www.youtube.com/embed/x1na7opaWH0?rel=0&modestbranding=1&showinfo=0&controls=1&color=white&iv_load_policy=3&disablekb=0&fs=1&playsinline=1"
+            src="https://www.youtube.com/embed/x1na7opaWH0?rel=0&modestbranding=1&showinfo=0&controls=1&color=white&iv_load_policy=3&autoplay=1&mute=1&loop=1&playlist=x1na7opaWH0&playsinline=1"
             title="AI Video 1"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -1703,7 +1822,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
       <div class="yt-card">
         <div class="yt-frame-wrap">
           <iframe
-            src="https://www.youtube.com/embed/Romfq4OYiZQ?rel=0&modestbranding=1&showinfo=0&controls=1&color=white&iv_load_policy=3&disablekb=0&fs=1&playsinline=1"
+            src="https://www.youtube.com/embed/Romfq4OYiZQ?rel=0&modestbranding=1&showinfo=0&controls=1&color=white&iv_load_policy=3&autoplay=1&mute=1&loop=1&playlist=Romfq4OYiZQ&playsinline=1"
             title="AI Video 2"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -2033,6 +2152,160 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// ── PARTICLE CANVAS ──
+(function() {
+  var canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var particles = [];
+  var W, H;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (var i = 0; i < 55; i++) {
+    particles.push({
+      x: Math.random() * 1000,
+      y: Math.random() * 1000,
+      r: Math.random() * 1.5 + 0.3,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      a: Math.random() * 0.5 + 0.1
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(function(p) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + p.a + ')';
+      ctx.fill();
+    });
+    // Draw connecting lines between nearby particles
+    for (var i = 0; i < particles.length; i++) {
+      for (var j = i + 1; j < particles.length; j++) {
+        var dx = particles[i].x - particles[j].x;
+        var dy = particles[i].y - particles[j].y;
+        var dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 120) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = 'rgba(255,255,255,' + (0.06 * (1 - dist/120)) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── CURSOR SPOTLIGHT ON HERO ──
+(function() {
+  var hero = document.querySelector('.hero');
+  var spot = document.getElementById('hero-spotlight');
+  if (!hero || !spot) return;
+  hero.addEventListener('mousemove', function(e) {
+    var rect = hero.getBoundingClientRect();
+    spot.style.left = (e.clientX - rect.left) + 'px';
+    spot.style.top  = (e.clientY - rect.top) + 'px';
+    spot.style.opacity = '1';
+  });
+  hero.addEventListener('mouseleave', function() {
+    spot.style.opacity = '0';
+  });
+})();
+
+// ── ANIMATED STAT COUNTERS ──
+(function() {
+  var stats = [
+    { el: null, target: 8,   suffix: 'M+',  prefix: '' },
+    { el: null, target: 25,  suffix: '%',   prefix: '+' },
+    { el: null, target: 7,   suffix: '+',   prefix: '' },
+    { el: null, target: 3,   suffix: '',    prefix: '' }
+  ];
+  var statEls = document.querySelectorAll('.stat-value');
+  statEls.forEach(function(el, i) {
+    if (stats[i]) stats[i].el = el;
+  });
+
+  function animateCount(stat) {
+    if (!stat.el) return;
+    var start = 0;
+    var duration = 1800;
+    var startTime = null;
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      var progress = Math.min((ts - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      var val = Math.floor(eased * stat.target);
+      stat.el.textContent = stat.prefix + val + stat.suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else stat.el.closest('.stat-item').classList.add('counted');
+    }
+    requestAnimationFrame(step);
+  }
+
+  var observed = false;
+  var strip = document.querySelector('.stats-strip');
+  if (!strip) return;
+  var observer = new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting && !observed) {
+      observed = true;
+      stats.forEach(function(s, i) { setTimeout(function() { animateCount(s); }, i * 150); });
+    }
+  }, { threshold: 0.3 });
+  observer.observe(strip);
+})();
+
+// ── FLOATING DOTS IN HERO ──
+(function() {
+  var hero = document.querySelector('.hero');
+  if (!hero) return;
+  for (var i = 0; i < 8; i++) {
+    var dot = document.createElement('div');
+    dot.className = 'float-dot';
+    var size = Math.random() * 6 + 3;
+    dot.style.cssText = [
+      'width:' + size + 'px',
+      'height:' + size + 'px',
+      'left:' + (Math.random() * 100) + '%',
+      'top:' + (Math.random() * 100) + '%',
+      'animation-duration:' + (Math.random() * 8 + 6) + 's',
+      'animation-delay:' + (Math.random() * 5) + 's'
+    ].join(';');
+    hero.appendChild(dot);
+  }
+})();
+
+// ── CARD TILT ON HOVER (desktop only) ──
+(function() {
+  if (window.innerWidth < 960) return;
+  document.querySelectorAll('.who-card, .tcard').forEach(function(card) {
+    card.addEventListener('mousemove', function(e) {
+      var rect = card.getBoundingClientRect();
+      var x = (e.clientX - rect.left) / rect.width  - 0.5;
+      var y = (e.clientY - rect.top)  / rect.height - 0.5;
+      card.style.transform = 'translateY(-4px) rotateX(' + (-y * 6) + 'deg) rotateY(' + (x * 6) + 'deg)';
+    });
+    card.addEventListener('mouseleave', function() {
+      card.style.transform = '';
+    });
+  });
+})();
+
 // Nav scroll
 var nav = document.getElementById('nav');
 window.addEventListener('scroll', function() {
