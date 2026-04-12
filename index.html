@@ -684,6 +684,14 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
   align-items: center; justify-content: center;
   overflow: hidden;
 }
+/* Vertical format for YouTube Shorts */
+.video-wrap-shorts {
+  aspect-ratio: 9/16;
+  max-height: 520px;
+}
+.video-two-col .video-wrap-shorts {
+  width: 100%;
+}
 .video-wrap iframe { width: 100%; height: 100%; border: none; }
 .vphold {
   display: flex; flex-direction: column;
@@ -1516,32 +1524,35 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
   <div class="video-inner">
     <div class="video-two-col">
       <div>
-        <div class="video-wrap">
-          <!-- VIDEO 1: Replace src with your file or YouTube embed
-               YouTube: <iframe src="https://www.youtube.com/embed/YOUR_ID" allowfullscreen></iframe>
-               Local:   <video src="video1.mp4" controls style="width:100%;height:100%;"></video>
-          -->
-          <div class="vphold">
-            <div class="vplay"><svg width="20" height="20" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white"/></svg></div>
-            <span>Add video1.mp4 or embed URL</span>
-          </div>
+        <div class="video-wrap video-wrap-shorts">
+          <iframe
+            src="https://www.youtube.com/embed/x1na7opaWH0?rel=0&modestbranding=1"
+            title="AI Video 1 — Nazanin Talei"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="width:100%;height:100%;border:none;display:block;">
+          </iframe>
         </div>
         <div class="video-meta" style="padding:1rem 0 0;">
-          <h3>Your video title</h3>
-          <p>Describe tools used and the result</p>
+          <h3>AI marketing video</h3>
+          <p>AI-powered content strategy — organic reach at scale</p>
         </div>
       </div>
       <div>
-        <div class="video-wrap">
-          <!-- VIDEO 2: Replace with your embed -->
-          <div class="vphold">
-            <div class="vplay"><svg width="20" height="20" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white"/></svg></div>
-            <span>Add video2.mp4 or embed URL</span>
-          </div>
+        <div class="video-wrap video-wrap-shorts">
+          <iframe
+            src="https://www.youtube.com/embed/Romfq4OYiZQ?rel=0&modestbranding=1"
+            title="AI Video 2 — Nazanin Talei"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            style="width:100%;height:100%;border:none;display:block;">
+          </iframe>
         </div>
         <div class="video-meta" style="padding:1rem 0 0;">
-          <h3>Your video title</h3>
-          <p>Describe tools used and the result</p>
+          <h3>AI marketing video</h3>
+          <p>AI-powered content strategy — organic reach at scale</p>
         </div>
       </div>
     </div>
@@ -1608,9 +1619,9 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
       </div>
 
       <div class="contact-links">
-        <a href="mailto:nazanintalei@gmail.com">
+        <a href="/cdn-cgi/l/email-protection#d1bfb0abb0bfb8bfa5b0bdb4b891b6bcb0b8bdffb2bebc">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
-          nazanintalei@gmail.com
+          <span class="__cf_email__" data-cfemail="0a646b706b6463647e6b666f634a6d676b636624696567">[email&#160;protected]</span>
         </a>
         <a href="tel:9496784841">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
@@ -1860,7 +1871,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
   <div class="footer-bottom">© 2025 Nazanin Talei · AI-Powered Marketing Consultant · All Rights Reserved</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Nav scroll
 var nav = document.getElementById('nav');
 window.addEventListener('scroll', function() {
@@ -1876,19 +1887,6 @@ function revealAll() {
 }
 revealAll();
 window.addEventListener('scroll', revealAll, { passive: true });
-
-// Video loader — show placeholder until video actually plays
-function initVideo(vidId, phId) {
-  var vid = document.getElementById(vidId);
-  var ph = document.getElementById(phId);
-  if (!vid || !ph) return;
-  ph.style.display = 'flex';
-  vid.style.display = 'none';
-  vid.addEventListener('canplay', function() { vid.style.display = 'block'; ph.style.display = 'none'; });
-  vid.load();
-}
-initVideo('vid1', 'vid1-ph');
-initVideo('vid2', 'vid2-ph');
 
 // Hero circular profile loader
 (function() {
@@ -1915,12 +1913,4 @@ initVideo('vid2', 'vid2-ph');
   function tryNext() {
     if (i >= exts.length) { if(ph) ph.style.display='flex'; return; }
     var t = new Image();
-    t.onload = function() { img.src = exts[i]+'?v='+Date.now(); img.style.display='block'; if(ph) ph.style.display='none'; };
-    t.onerror = function() { i++; tryNext(); };
-    t.src = exts[i]+'?v='+Date.now();
-  }
-  tryNext();
-})();
-</script>
-</body>
-</html>
+    t.onloa
