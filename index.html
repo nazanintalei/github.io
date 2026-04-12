@@ -734,80 +734,68 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
 
 /* ── CTA ── */
 .cta-section {
-  display: grid; grid-template-columns: 1fr 1fr;
   background: var(--black);
+  position: relative; overflow: hidden;
+  text-align: center;
 }
-.cta-left {
-  padding: 6rem 3rem;
-  border-right: 1px solid rgba(255,255,255,0.08);
+.cta-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 50px 50px; pointer-events: none;
 }
-.cta-right {
-  padding: 6rem 3rem;
-  display: flex; flex-direction: column;
-  justify-content: center; gap: 1.75rem;
+.cta-inner {
+  padding: 6rem 3rem; position: relative; z-index: 1;
+  max-width: 700px; margin: 0 auto;
 }
-.cta-heading {
-  font-family: var(--sans);
-  font-size: clamp(36px, 5vw, 60px);
-  font-weight: 400; letter-spacing: 0.02em;
-  line-height: 1; color: white;
+.cta-eyebrow {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1.5rem;
 }
-.cta-heading em {
+.cta-h {
   font-family: var(--serif);
-  font-style: italic; font-weight: 300; font-size: 1.05em;
+  font-size: clamp(40px, 7vw, 80px);
+  font-weight: 300; line-height: 1; letter-spacing: -1px;
+  color: white; margin-bottom: 1.25rem;
 }
+.cta-h em { font-style: italic; color: rgba(255,255,255,0.45); }
 .cta-sub {
-  font-size: 14px; font-weight: 300;
-  color: rgba(255,255,255,0.45); line-height: 1.8;
+  font-size: 15px; font-weight: 300;
+  color: rgba(255,255,255,0.4); line-height: 1.7; margin-bottom: 2.5rem;
 }
-.cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
-.btn-wht {
-  display: inline-block; padding: 14px 32px;
-  font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-  text-transform: uppercase; background: white; color: var(--black);
-  text-decoration: none; transition: background 0.2s;
+.cta-contact-row {
+  display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
 }
-.btn-wht:hover { background: #e0e0e0; }
-.btn-bdr {
-  display: inline-block; padding: 13px 32px;
-  font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
-  text-transform: uppercase; background: transparent;
-  color: rgba(255,255,255,0.5);
-  border: 1px solid rgba(255,255,255,0.2);
-  text-decoration: none; transition: border-color 0.2s, color 0.2s;
+.cta-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px; color: rgba(255,255,255,0.75);
+  text-decoration: none; font-size: 13px; font-weight: 300;
+  transition: border-color 0.2s, color 0.2s, background 0.2s; background: transparent;
 }
-.btn-bdr:hover { border-color: white; color: white; }
+.cta-pill:hover { border-color: white; color: white; background: rgba(255,255,255,0.05); }
 
 /* ── FOOTER ── */
 footer {
   background: var(--black);
   border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 4rem 3rem 2.5rem;
+  padding: 2rem 3rem;
   display: flex; flex-direction: column;
-  align-items: center; gap: 1.5rem; text-align: center;
+  align-items: center; gap: 1rem; text-align: center;
 }
-.footer-logo {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
+.footer-top-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+  background: transparent; border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 100px; padding: 7px 16px; cursor: pointer;
+  transition: color 0.2s, border-color 0.2s; font-family: var(--sans);
 }
-.footer-logo-mark {
-  width: 48px; height: 48px; border: 1px solid rgba(255,255,255,0.2);
-  display: flex; align-items: center; justify-content: center;
-}
-.footer-logo-mark svg { width: 24px; height: 24px; stroke: white; fill: none; stroke-width: 1.5; }
-.footer-name {
-  font-size: 10px; font-weight: 500; letter-spacing: 0.18em;
-  text-transform: uppercase; color: rgba(255,255,255,0.4);
-}
-.footer-links {
-  display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;
-}
-.footer-links a {
-  font-size: 12px; font-weight: 300; color: rgba(255,255,255,0.4);
-  text-decoration: none; transition: color 0.2s;
-}
-.footer-links a:hover { color: white; }
+.footer-top-btn:hover { color: white; border-color: rgba(255,255,255,0.35); }
 .footer-bottom {
-  font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.25);
+  font-size: 11px; font-weight: 300;
+  color: rgba(255,255,255,0.2); letter-spacing: 0.04em;
 }
 
 /* ── SCROLL REVEAL ── */
@@ -859,10 +847,10 @@ footer {
   .hero-profile-frame::before { display: none; }
 
   .welcome { padding: 4rem 1.5rem 3rem; }
-  .bio-split, .cta-section { grid-template-columns: 1fr; }
+  .bio-split { grid-template-columns: 1fr; }
   .bio-left { border-right: none; border-bottom: 1px solid var(--border); padding: 3rem 1.5rem; }
-  .cta-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); padding: 3rem 1.5rem; }
-  .cta-right { padding: 3rem 1.5rem; }
+  .cta-inner { padding: 4rem 1.5rem; }
+  .cta-contact-row { flex-direction: column; align-items: stretch; }
   .stats-strip { grid-template-columns: repeat(2,1fr); }
   .stat-item:nth-child(2) { border-right: none; }
   .stat-item { padding: 2rem 1.5rem; }
@@ -887,10 +875,9 @@ footer {
   .section-hdr, .certs-inner, .video-inner { padding-left: 1.5rem; padding-right: 1.5rem; }
   .big-italic { padding: 4rem 1.5rem; }
   footer { padding: 3rem 1.5rem 2rem; }
-  .who-grid { grid-template-columns: 1fr 1fr; }
-  .who-card:nth-child(2n) { border-right: none; }
-  .who-card:nth-child(3) { border-top: 1px solid var(--border); }
-  .who-card:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+  .who-grid { grid-template-columns: 1fr; }
+  .who-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .who-card:last-child { border-bottom: none; }
   .packages-grid { grid-template-columns: 1fr; }
   .pkg-card { border-right: none; border-bottom: 1px solid var(--border); }
   .pkg-featured { order: -1; }
@@ -1531,7 +1518,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
           <div class="case-meta-item"><span class="case-meta-label">Ad spend</span><span class="case-meta-val">$0</span></div>
           <div class="case-meta-item"><span class="case-meta-label">Type</span><span class="case-meta-val">Organic AI</span></div>
         </div>
-        <a href="#ai-video" class="btn-watch">Watch the video →</a>
+        <a href="#ai-video" class="btn-watch">Sample AI Generated Videos →</a>
       </div>
       <div class="case-right">
         <img id="img-project2" src="" alt="Viral video" style="display:none;">
@@ -1953,26 +1940,22 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 
 <!-- ══ FINAL CTA ══ -->
 <section class="cta-section rv">
-  <div class="cta-l">
-    <h2 class="cta-h">Let's build<br>something that<br><em>grows.</em></h2>
-  </div>
-  <div class="cta-r">
-    <p class="cta-sub">Ready to scale your brand with smarter strategy and high-performing content? Get in touch directly.</p>
-    <div class="cta-contact-block">
-      <a href="tel:9496784841" class="cta-contact-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
-        <span class="cta-contact-label">Phone</span>
-        <span class="cta-contact-value">949.678.4841</span>
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Get in touch</div>
+    <h2 class="cta-h">Let's build something<br>that <em>grows.</em></h2>
+    <p class="cta-sub">Ready to scale your brand with smarter strategy and high-performing content?</p>
+    <div class="cta-contact-row">
+      <a href="tel:9496784841" class="cta-pill">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
+        949.678.4841
       </a>
-      <a href="mailto:nazanintalei@gmail.com" class="cta-contact-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
-        <span class="cta-contact-label">Email</span>
-        <span class="cta-contact-value">nazanintalei@gmail.com</span>
+      <a href="mailto:nazanintalei@gmail.com" class="cta-pill">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+        nazanintalei@gmail.com
       </a>
-      <a href="https://www.linkedin.com/in/nazanintalei" target="_blank" class="cta-contact-item">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        <span class="cta-contact-label">LinkedIn</span>
-        <span class="cta-contact-value">linkedin.com/in/nazanintalei</span>
+      <a href="https://www.linkedin.com/in/nazanintalei" target="_blank" class="cta-pill">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
       </a>
     </div>
   </div>
@@ -1980,17 +1963,11 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  <div class="footer-logo">
-    <div class="footer-logo-mark">
-      <svg viewBox="0 0 24 24"><polyline points="4 6 12 4 20 6"/><polyline points="4 12 12 10 20 12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
-    </div>
-    <div class="footer-name">Nazanin Talei</div>
-  </div>
-  <div class="footer-links">
-    <a href="tel:9496784841">949.678.4841</a>
-    <a href="mailto:nazanintalei@gmail.com">nazanintalei@gmail.com</a>
-    <a href="https://www.linkedin.com/in/nazanintalei" target="_blank">LinkedIn</a>
-  </div>
+  <button class="footer-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+    Back to top
+  </button>
+  <div class="footer-name" style="font-size:13px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Nazanin Talei</div>
   <div class="footer-bottom">© 2025 Nazanin Talei · AI-Powered Marketing Consultant · All Rights Reserved</div>
 </footer>
 
@@ -2056,7 +2033,7 @@ window.addEventListener('scroll', revealAll, { passive: true });
     if (!img) return;
     var t = new Image();
     t.onload = function() {
-      img.src = p.file + '?v=' + Date.now();
+            img.src = p.file + '?v=' + Date.now();
       img.style.display = 'block';
       if (ph) ph.style.display = 'none';
     };
@@ -2067,9 +2044,8 @@ window.addEventListener('scroll', revealAll, { passive: true });
     t.src = p.file + '?v=' + Date.now();
   });
 
-  // Also load service/industry card images directly with cache-busting
+  // Also load service/industry card images with cache-busting
   document.querySelectorAll('.ind-card-img img').forEach(function(img) {
-    if (!img.src || img.src === window.location.href) return;
     var original = img.getAttribute('src');
     if (!original || original.indexOf('?') !== -1) return;
     var t = new Image();
