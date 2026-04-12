@@ -1016,6 +1016,58 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
   color: var(--muted); letter-spacing: 0.02em;
 }
 
+/* ── HERO CONTACT INLINE ── */
+.hero-contact-inline {
+  display: flex; align-items: center; gap: 12px;
+  flex-wrap: wrap; margin-top: 1.5rem;
+}
+.hero-contact-inline a {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.hero-contact-inline a:hover { color: rgba(255,255,255,0.9); }
+.hero-contact-divider { color: rgba(255,255,255,0.2); font-size: 14px; }
+
+/* ── MID-CTA CONTACT ── */
+.mid-cta-contact {
+  display: flex; align-items: center; gap: 2rem;
+  justify-content: center; flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+.mid-cta-link {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; font-weight: 400;
+  color: var(--black); text-decoration: none;
+  transition: color 0.2s;
+}
+.mid-cta-link:hover { color: var(--muted); }
+.mid-cta-divider { color: var(--light); font-size: 18px; }
+
+/* ── FINAL CTA CONTACT BLOCK ── */
+.cta-contact-block {
+  display: flex; flex-direction: column; gap: 1.25rem;
+}
+.cta-contact-item {
+  display: flex; align-items: center; gap: 14px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.cta-contact-item:hover { opacity: 0.7; }
+.cta-contact-item svg { flex-shrink: 0; stroke: rgba(255,255,255,0.4); }
+.cta-contact-label {
+  font-size: 10px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  min-width: 48px;
+}
+.cta-contact-value {
+  font-size: 15px; font-weight: 300;
+  color: rgba(255,255,255,0.85);
+}
+
 /* ── WHO I HELP ── */
 .who-section { border-bottom: 1px solid var(--border); }
 .who-grid {
@@ -1212,7 +1264,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
     <li><a href="#work">Results</a></li>
     <li><a href="#about">About</a></li>
   </ul>
-  <a href="/cdn-cgi/l/email-protection#aec0cfd4cfc0c7c0dacfc2cbc7eec9c3cfc7c280cdc1c391dddbccc4cbcdda93e8dccbcb8efddadccfdacbc9d78eedcfc2c2" class="nav-cta-btn">Book a free call</a>
+  <a href="https://www.linkedin.com/in/nazanintalei" target="_blank" class="nav-cta-btn">LinkedIn</a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -1234,8 +1286,19 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
       <span class="hero-proof-item">US · China · <strong>Middle East</strong></span>
     </div>
     <div class="hero-ctas">
-      <a href="/cdn-cgi/l/email-protection#620c0318030c0b0c16030e070b22050f030b0e4c010d0f5d111700080701165f2410070742311610031607051b4221030e0e" class="btn-hero-primary">Book a free strategy call</a>
-      <a href="#work" class="btn-hero-ghost">View case studies ›</a>
+      <a href="#work" class="btn-hero-primary">View case studies</a>
+      <a href="#services" class="btn-hero-ghost">See services ›</a>
+    </div>
+    <div class="hero-contact-inline">
+      <a href="tel:9496784841">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
+        949.678.4841
+      </a>
+      <span class="hero-contact-divider">·</span>
+      <a href="mailto:nazanintalei@gmail.com">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+        nazanintalei@gmail.com
+      </a>
     </div>
   </div>
 
@@ -1390,7 +1453,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
     </div>
 
   </div>
-  <div class="pkg-note rv">Not sure which is right for you? <a href="/cdn-cgi/l/email-protection#bfd1dec5ded1d6d1cbded3dad6ffd8d2ded6d391dcd0d280cccaddd5dadccb82f9cddada9feccbcddecbdad8c69ffcded3d3">Book a free 30-min strategy call</a> — no pitch, just clarity.</div>
+  <div class="pkg-note rv">Have a question? Reach out at <a href="mailto:nazanintalei@gmail.com">nazanintalei@gmail.com</a> or call <a href="tel:9496784841">949.678.4841</a></div>
 </section>
 
 <!-- ══ CASE STUDIES ══ -->
@@ -1539,10 +1602,17 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 <div class="mid-cta rv">
   <div class="mid-cta-inner">
     <h2 class="mid-cta-h">Let's Build Something That Grows</h2>
-    <p class="mid-cta-sub">If you're ready to scale your brand with smarter strategy and high-performing content, let's talk.</p>
-    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <a href="/cdn-cgi/l/email-protection#432d2239222d2a2d37222f262a03242e222a2f6d202c2e7c303621292620377e0531262663103731223726243a6300222f2f" class="btn-dark" style="display:inline-block;padding:16px 40px;font-size:12px;letter-spacing:0.12em;">Book a free strategy call →</a>
-      <a href="/cdn-cgi/l/email-protection#aac4cbd0cbc4c3c4decbc6cfc3eacdc7cbc3c684c9c5c7" class="btn-outline-dark" style="display:inline-block;padding:16px 36px;font-size:12px;letter-spacing:0.12em;">Contact me →</a>
+    <p class="mid-cta-sub">If you're ready to scale your brand with smarter strategy and high-performing content, get in touch.</p>
+    <div class="mid-cta-contact">
+      <a href="tel:9496784841" class="mid-cta-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
+        949.678.4841
+      </a>
+      <span class="mid-cta-divider">·</span>
+      <a href="mailto:nazanintalei@gmail.com" class="mid-cta-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+        nazanintalei@gmail.com
+      </a>
     </div>
   </div>
 </div>
@@ -1880,10 +1950,23 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
     <h2 class="cta-h">Let's build<br>something that<br><em>grows.</em></h2>
   </div>
   <div class="cta-r">
-    <p class="cta-sub">If you're ready to scale your brand with smarter strategy and high-performing content — let's talk. Book a free 30-minute call and get a clear picture of exactly what your business needs.</p>
-    <div class="cta-btns">
-      <a href="/cdn-cgi/l/email-protection#81efe0fbe0efe8eff5e0ede4e8c1e6ece0e8edafe2eeecbef2f4e3ebe4e2f5bcc7f3e4e4a1d2f5f3e0f5e4e6f8a1c2e0eded" class="btn-wht">Book a free strategy call</a>
-      <a href="/cdn-cgi/l/email-protection#0c626d766d626562786d6069654c6b616d6560226f6361" class="btn-bdr">Contact me</a>
+    <p class="cta-sub">Ready to scale your brand with smarter strategy and high-performing content? Get in touch directly.</p>
+    <div class="cta-contact-block">
+      <a href="tel:9496784841" class="cta-contact-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
+        <span class="cta-contact-label">Phone</span>
+        <span class="cta-contact-value">949.678.4841</span>
+      </a>
+      <a href="mailto:nazanintalei@gmail.com" class="cta-contact-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+        <span class="cta-contact-label">Email</span>
+        <span class="cta-contact-value">nazanintalei@gmail.com</span>
+      </a>
+      <a href="https://www.linkedin.com/in/nazanintalei" target="_blank" class="cta-contact-item">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        <span class="cta-contact-label">LinkedIn</span>
+        <span class="cta-contact-value">linkedin.com/in/nazanintalei</span>
+      </a>
     </div>
   </div>
 </section>
@@ -1897,8 +1980,8 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
     <div class="footer-name">Nazanin Talei</div>
   </div>
   <div class="footer-links">
-    <a href="/cdn-cgi/l/email-protection#e08e819a818e898e94818c8589a0878d81898cce838f8d"><span class="__cf_email__" data-cfemail="bbd5dac1dad5d2d5cfdad7ded2fbdcd6dad2d795d8d4d6">[email&#160;protected]</span></a>
     <a href="tel:9496784841">949.678.4841</a>
+    <a href="mailto:nazanintalei@gmail.com">nazanintalei@gmail.com</a>
     <a href="https://www.linkedin.com/in/nazanintalei" target="_blank">LinkedIn</a>
   </div>
   <div class="footer-bottom">© 2025 Nazanin Talei · AI-Powered Marketing Consultant · All Rights Reserved</div>
