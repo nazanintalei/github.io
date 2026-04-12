@@ -957,6 +957,38 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 .trust-item { font-size: 12px; font-weight: 400; color: var(--mid); }
 .trust-dot { color: var(--muted); font-size: 10px; }
 
+/* ── CLEAN YOUTUBE CARDS ── */
+.yt-card { display: flex; flex-direction: column; gap: 1rem; }
+.yt-frame-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9/16;
+  max-height: 520px;
+  background: var(--dark);
+  border-radius: 12px;
+  overflow: hidden;
+}
+/* The iframe is scaled up slightly and the top/bottom edges hidden
+   so the YouTube logo/title bar are cropped out of view */
+.yt-frame-wrap iframe {
+  position: absolute;
+  /* Expand 10% on each side to crop YouTube UI */
+  top: -8%;
+  left: -5%;
+  width: 110%;
+  height: 116%;
+  border: none;
+  pointer-events: all;
+}
+.yt-meta h3 {
+  font-family: var(--serif);
+  font-size: 20px; font-weight: 400;
+  color: var(--black); margin-bottom: 4px;
+}
+.yt-meta p {
+  font-size: 13px; font-weight: 300; color: var(--mid);
+}
+
 /* ── EDUCATION BLOCK ── */
 .edu-block { display: flex; flex-direction: column; gap: 0; }
 .edu-item-row {
@@ -1523,38 +1555,39 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
   </div>
   <div class="video-inner">
     <div class="video-two-col">
-      <div>
-        <div class="video-wrap video-wrap-shorts">
+
+      <div class="yt-card">
+        <div class="yt-frame-wrap">
           <iframe
-            src="https://www.youtube.com/embed/x1na7opaWH0?rel=0&modestbranding=1"
-            title="AI Video 1 — Nazanin Talei"
+            src="https://www.youtube.com/embed/x1na7opaWH0?rel=0&modestbranding=1&showinfo=0&controls=1&color=white&iv_load_policy=3&disablekb=0&fs=1&playsinline=1"
+            title="AI Video 1"
             frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            style="width:100%;height:100%;border:none;display:block;">
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
           </iframe>
         </div>
-        <div class="video-meta" style="padding:1rem 0 0;">
+        <div class="yt-meta">
           <h3>AI marketing video</h3>
           <p>AI-powered content strategy — organic reach at scale</p>
         </div>
       </div>
-      <div>
-        <div class="video-wrap video-wrap-shorts">
+
+      <div class="yt-card">
+        <div class="yt-frame-wrap">
           <iframe
-            src="https://www.youtube.com/embed/Romfq4OYiZQ?rel=0&modestbranding=1"
-            title="AI Video 2 — Nazanin Talei"
+            src="https://www.youtube.com/embed/Romfq4OYiZQ?rel=0&modestbranding=1&showinfo=0&controls=1&color=white&iv_load_policy=3&disablekb=0&fs=1&playsinline=1"
+            title="AI Video 2"
             frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            style="width:100%;height:100%;border:none;display:block;">
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
           </iframe>
         </div>
-        <div class="video-meta" style="padding:1rem 0 0;">
+        <div class="yt-meta">
           <h3>AI marketing video</h3>
           <p>AI-powered content strategy — organic reach at scale</p>
         </div>
       </div>
+
     </div>
   </div>
 </section>
@@ -1913,4 +1946,12 @@ window.addEventListener('scroll', revealAll, { passive: true });
   function tryNext() {
     if (i >= exts.length) { if(ph) ph.style.display='flex'; return; }
     var t = new Image();
-    t.onloa
+    t.onload = function() { img.src = exts[i]+'?v='+Date.now(); img.style.display='block'; if(ph) ph.style.display='none'; };
+    t.onerror = function() { i++; tryNext(); };
+    t.src = exts[i]+'?v='+Date.now();
+  }
+  tryNext();
+})();
+</script>
+</body>
+</html>
