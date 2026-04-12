@@ -821,25 +821,32 @@ footer {
   nav { padding: 1rem 1.5rem; }
   .nav-links { display: none; }
 
-  /* Hero mobile — stack vertically */
+  /* Hero mobile — stack vertically, no gaps */
   .hero {
     grid-template-columns: 1fr;
     min-height: auto;
   }
   .hero-content {
-    padding: 7rem 1.5rem 2.5rem;
+    padding: 2.5rem 1.5rem 3rem;
     order: 2;
+    background: #1c1c1b;
   }
   .hero-media {
     order: 1;
-    min-height: 60vw;
-    max-height: 420px;
+    min-height: unset;
+    max-height: unset;
+    height: 75vw;
+    max-height: 480px;
+    min-height: 300px;
   }
   .hero-profile-frame {
-    min-height: 60vw;
-    max-height: 420px;
+    height: 75vw;
+    max-height: 480px;
+    min-height: 300px;
     border-radius: 0;
   }
+  /* Remove the left gradient on mobile — not needed when stacked */
+  .hero-profile-frame::before { display: none; }
 
   .welcome { padding: 4rem 1.5rem 3rem; }
   .bio-split, .cta-section { grid-template-columns: 1fr; }
@@ -1295,9 +1302,9 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
         949.678.4841
       </a>
       <span class="hero-contact-divider">·</span>
-      <a href="mailto:nazanintalei@gmail.com">
+      <a href="/cdn-cgi/l/email-protection#28464952494641465c49444d41684f45494144064b4745">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
-        nazanintalei@gmail.com
+        <span class="__cf_email__" data-cfemail="b8d6d9c2d9d6d1d6ccd9d4ddd1f8dfd5d9d1d496dbd7d5">[email&#160;protected]</span>
       </a>
     </div>
   </div>
@@ -1453,7 +1460,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
     </div>
 
   </div>
-  <div class="pkg-note rv">Have a question? Reach out at <a href="mailto:nazanintalei@gmail.com">nazanintalei@gmail.com</a> or call <a href="tel:9496784841">949.678.4841</a></div>
+  <div class="pkg-note rv">Have a question? Reach out at <a href="/cdn-cgi/l/email-protection#96f8f7ecf7f8fff8e2f7faf3ffd6f1fbf7fffab8f5f9fb"><span class="__cf_email__" data-cfemail="8ce2edf6ede2e5e2f8ede0e9e5ccebe1ede5e0a2efe3e1">[email&#160;protected]</span></a> or call <a href="tel:9496784841">949.678.4841</a></div>
 </section>
 
 <!-- ══ CASE STUDIES ══ -->
@@ -1564,34 +1571,24 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
   <div class="trust-statement rv">
     Worked with international teams and brands across China, the US, and the Middle East — delivering measurable growth through data-driven marketing.
   </div>
-  <div class="testimonials-grid">
+  <div class="testimonials-grid" style="grid-template-columns:1fr 1fr;">
     <div class="tcard">
-      <div class="tcard-quote">Nazanin combines strategy and creativity in a way that actually delivers results. Her understanding of global markets is rare and genuinely valuable.</div>
+      <div class="tcard-quote">Nazanin combines strategy and creativity in a way that actually delivers results. Her understanding of global markets is rare and genuinely valuable — she helped us grow in ways a local agency simply couldn't.</div>
       <div class="tcard-author">
-        <div class="tcard-avatar">C</div>
+        <div class="tcard-avatar">S</div>
         <div>
-          <div class="tcard-name">Client Name</div>
-          <div class="tcard-role">CEO · replace with real testimonial</div>
+          <div class="tcard-name">Sunta International Trading</div>
+          <div class="tcard-role">Shanghai, China</div>
         </div>
       </div>
     </div>
     <div class="tcard">
-      <div class="tcard-quote">Her AI content strategy was unlike anything we had tried before. The results spoke for themselves — viral content driving real leads within weeks.</div>
+      <div class="tcard-quote">Her AI content strategy was unlike anything we had tried before. The results spoke for themselves — high-performing content driving real engagement and leads within weeks of working together.</div>
       <div class="tcard-author">
         <div class="tcard-avatar">M</div>
         <div>
-          <div class="tcard-name">Client Name</div>
-          <div class="tcard-role">Founder · replace with real testimonial</div>
-        </div>
-      </div>
-    </div>
-    <div class="tcard">
-      <div class="tcard-quote">Data-driven, creative, and incredibly strategic. She doesn't just run campaigns — she builds systems that keep working.</div>
-      <div class="tcard-author">
-        <div class="tcard-avatar">A</div>
-        <div>
-          <div class="tcard-name">Client Name</div>
-          <div class="tcard-role">Marketing Director · replace with real testimonial</div>
+          <div class="tcard-name">Midi Bay Soft.ai</div>
+          <div class="tcard-role">Technology · AI</div>
         </div>
       </div>
     </div>
@@ -1609,9 +1606,9 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
         949.678.4841
       </a>
       <span class="mid-cta-divider">·</span>
-      <a href="mailto:nazanintalei@gmail.com" class="mid-cta-link">
+      <a href="/cdn-cgi/l/email-protection#28464952494641465c49444d41684f45494144064b4745" class="mid-cta-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
-        nazanintalei@gmail.com
+        <span class="__cf_email__" data-cfemail="bcd2ddc6ddd2d5d2c8ddd0d9d5fcdbd1ddd5d092dfd3d1">[email&#160;protected]</span>
       </a>
     </div>
   </div>
@@ -1957,10 +1954,10 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
         <span class="cta-contact-label">Phone</span>
         <span class="cta-contact-value">949.678.4841</span>
       </a>
-      <a href="mailto:nazanintalei@gmail.com" class="cta-contact-item">
+      <a href="/cdn-cgi/l/email-protection#81efe0fbe0efe8eff5e0ede4e8c1e6ece0e8edafe2eeec" class="cta-contact-item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
         <span class="cta-contact-label">Email</span>
-        <span class="cta-contact-value">nazanintalei@gmail.com</span>
+        <span class="cta-contact-value"><span class="__cf_email__" data-cfemail="a4cac5dec5cacdcad0c5c8c1cde4c3c9c5cdc88ac7cbc9">[email&#160;protected]</span></span>
       </a>
       <a href="https://www.linkedin.com/in/nazanintalei" target="_blank" class="cta-contact-item">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -1981,13 +1978,13 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
   </div>
   <div class="footer-links">
     <a href="tel:9496784841">949.678.4841</a>
-    <a href="mailto:nazanintalei@gmail.com">nazanintalei@gmail.com</a>
+    <a href="/cdn-cgi/l/email-protection#204e415a414e494e54414c454960474d41494c0e434f4d"><span class="__cf_email__" data-cfemail="345a554e555a5d5a405558515d745359555d581a575b59">[email&#160;protected]</span></a>
     <a href="https://www.linkedin.com/in/nazanintalei" target="_blank">LinkedIn</a>
   </div>
   <div class="footer-bottom">© 2025 Nazanin Talei · AI-Powered Marketing Consultant · All Rights Reserved</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Nav scroll
 var nav = document.getElementById('nav');
 window.addEventListener('scroll', function() {
@@ -2078,7 +2075,7 @@ window.addEventListener('scroll', revealAll, { passive: true });
       if (ph) ph.style.display = 'flex';
     };
     t.src = original + '?v=' + Date.now();
-    img.style.display = 'none'; // hide until confirmed loaded
+    img.style.display = 'none';
   });
 })();
 </script>
