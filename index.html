@@ -89,19 +89,33 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
-  padding: 8rem 3rem 5rem;
+  align-items: stretch;
   overflow: hidden;
-  gap: 2rem;
+  gap: 0;
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 10rem 3rem 5rem;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  max-width: 100%;
+}
+.hero-media {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
 }
 
 /* Subtle city-style background pattern */
 .hero-bg {
   position: absolute; inset: 0;
+  grid-column: 1 / -1;
   background:
     radial-gradient(ellipse 80% 60% at 70% 40%, rgba(80,70,60,0.4), transparent),
     radial-gradient(ellipse 50% 80% at 30% 70%, rgba(40,35,30,0.6), transparent);
   pointer-events: none;
+  z-index: 0;
 }
 /* Large soft circle like DCL */
 .hero-circle {
@@ -111,9 +125,9 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
   background: rgba(255,255,255,0.03);
   top: -100px; right: -100px;
   pointer-events: none;
+  z-index: 0;
 }
 
-.hero-content { position: relative; z-index: 2; max-width: 520px; }
 .hero-label {
   font-family: var(--sans);
   font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
@@ -158,15 +172,24 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
 
 /* Circular profile frame at top of hero right */
 .hero-profile-frame {
-  width: 140px; height: 140px;
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
   overflow: hidden;
-  border: 3px solid rgba(255,255,255,0.15);
-  box-shadow: 0 0 0 6px rgba(255,255,255,0.05), 0 12px 40px rgba(0,0,0,0.4);
+  border-radius: 0;
   background: #2a2a2a;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
-  animation: profilePop 0.8s cubic-bezier(.16,1,.3,1) 0.4s both;
+  animation: profilePop 0.9s cubic-bezier(.16,1,.3,1) 0.3s both;
+  position: relative;
+}
+/* Gradient fade on left edge of photo blending into dark hero bg */
+.hero-profile-frame::before {
+  content: '';
+  position: absolute; inset: 0; left: 0;
+  background: linear-gradient(to right, #1c1c1b 0%, transparent 30%);
+  z-index: 1;
+  pointer-events: none;
 }
 .hero-profile-frame img {
   width: 100%; height: 100%;
@@ -175,12 +198,12 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
 }
 .hero-profile-ph {
   display: flex; flex-direction: column;
-  align-items: center; gap: 6px;
-  color: rgba(255,255,255,0.3); font-size: 10px; text-align: center;
+  align-items: center; gap: 10px;
+  color: rgba(255,255,255,0.25); font-size: 12px; text-align: center;
 }
 @keyframes profilePop {
-  from { transform: scale(0.6); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
+  from { opacity: 0; transform: scale(1.05); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 /* Video cards row */
@@ -501,10 +524,12 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
 }
 .ind-card {
   border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
   overflow: hidden; position: relative;
   min-height: 320px; cursor: default;
 }
-.ind-card:last-child { border-right: none; }
+.ind-card:nth-child(3n) { border-right: none; }
+.ind-card:nth-child(4),.ind-card:nth-child(5),.ind-card:nth-child(6) { border-bottom: none; }
 .ind-card-img {
   width: 100%; height: 100%; min-height: 320px;
   background: var(--bg3);
@@ -649,6 +674,7 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
 }
 
 /* ── VIDEO ── */
+.video-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
 .video-section { border-bottom: 1px solid var(--border); }
 .video-inner { padding: 3rem; }
 .video-wrap {
@@ -787,39 +813,25 @@ footer {
   nav { padding: 1rem 1.5rem; }
   .nav-links { display: none; }
 
-  /* Hero — switch to column so profile + videos stack below text */
+  /* Hero mobile — stack vertically */
   .hero {
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: flex-start;
-    padding: 6rem 1.5rem 2.5rem;
+    grid-template-columns: 1fr;
     min-height: auto;
-    display: flex;
-    grid-template-columns: unset;
   }
-  .hero-content { max-width: 100%; padding-bottom: 2rem; }
+  .hero-content {
+    padding: 7rem 1.5rem 2.5rem;
+    order: 2;
+  }
   .hero-media {
-    display: flex;
-    position: static;
-    transform: none;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    padding-bottom: 2rem;
+    order: 1;
+    min-height: 60vw;
+    max-height: 420px;
   }
-  .hero-profile-frame { width: 100px; height: 100px; }
-  .hero-videos-row {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    width: 100%;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  .hero-profile-frame {
+    min-height: 60vw;
+    max-height: 420px;
+    border-radius: 0;
   }
-  .hero-videos-row::-webkit-scrollbar { display: none; }
-  .media-card-1 { width: 160px; height: 260px; flex-shrink: 0; margin-top: 0; }
-  .media-card-2 { width: 160px; height: 260px; flex-shrink: 0; }
 
   .welcome { padding: 4rem 1.5rem 3rem; }
   .bio-split, .cta-section { grid-template-columns: 1fr; }
@@ -832,8 +844,12 @@ footer {
   .case-item { grid-template-columns: 1fr; }
   .case-left { border-right: none; border-bottom: 1px solid var(--border); padding: 2.5rem 1.5rem; }
   .case-right { min-height: 280px; }
+  .video-two-col { grid-template-columns: 1fr; }
   .industry-grid { grid-template-columns: 1fr 1fr; }
-  .ind-card:nth-child(3) { grid-column: 1 / -1; border-right: none; }
+  .ind-card:nth-child(3n) { border-right: 1px solid var(--border); }
+  .ind-card:nth-child(2n) { border-right: none; }
+  .ind-card:nth-child(5),.ind-card:nth-child(6) { border-bottom: 1px solid var(--border); }
+  .ind-card:last-child { border-bottom: none; }
   .timeline .tline-item { grid-template-columns: 1fr; }
   .tline-left { border-right: none; border-bottom: 1px solid var(--border); padding: 1.5rem; }
   .tline-right { padding: 1.5rem; }
@@ -846,15 +862,271 @@ footer {
   .section-hdr, .certs-inner, .video-inner { padding-left: 1.5rem; padding-right: 1.5rem; }
   .big-italic { padding: 4rem 1.5rem; }
   footer { padding: 3rem 1.5rem 2rem; }
+  .who-grid { grid-template-columns: 1fr 1fr; }
+  .who-card:nth-child(2n) { border-right: none; }
+  .who-card:nth-child(3) { border-top: 1px solid var(--border); }
+  .who-card:nth-child(4) { border-top: 1px solid var(--border); border-right: none; }
+  .packages-grid { grid-template-columns: 1fr; }
+  .pkg-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .pkg-featured { order: -1; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .tcard { border-right: none; border-bottom: 1px solid var(--border); }
+  .tcard:last-child { border-bottom: none; }
+  .trust-bar { padding: 1rem 1.5rem; }
+  .mid-cta-inner { padding: 3rem 1.5rem; }
+  .before-after { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .industry-grid { grid-template-columns: 1fr; }
   .ind-card:nth-child(3) { grid-column: auto; }
   .ind-card { border-right: none; border-bottom: 1px solid var(--border); }
 }
+.who-intro {
+  padding: 1.5rem 3rem;
+  font-family: var(--serif);
+  font-size: 20px; font-weight: 300; font-style: italic;
+  color: var(--mid); border-bottom: 1px solid var(--border);
+}
+.trust-statement {
+  padding: 2rem 3rem;
+  font-size: 15px; font-weight: 300;
+  color: var(--mid); line-height: 1.75;
+  border-bottom: 1px solid var(--border);
+  max-width: 700px;
+}
+/* ── NAV CTA BUTTON ── */
+.nav-cta-btn {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 9px 20px;
+  background: transparent; color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 100px; text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
+.nav-cta-btn:hover { background: var(--black); color: white; border-color: var(--black); }
+
+/* ── HERO PROOF + CTAS ── */
+.hero-proof {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+.hero-proof-item { font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.6); }
+.hero-proof-item strong { color: white; font-weight: 500; }
+.hero-proof-divider { color: rgba(255,255,255,0.25); }
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-hero-primary {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 14px 32px;
+  background: white; color: var(--black);
+  border: none; border-radius: 100px;
+  text-decoration: none; display: inline-block;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-hero-primary:hover { background: #e8e8e8; transform: translateY(-1px); }
+.btn-hero-ghost {
+  font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.6);
+  text-decoration: none; display: inline-flex; align-items: center;
+  padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.2);
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-hero-ghost:hover { color: white; border-color: rgba(255,255,255,0.6); }
+
+/* ── TRUST BAR ── */
+.trust-bar {
+  padding: 1rem 3rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  display: flex; align-items: center; gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.trust-label {
+  font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+  white-space: nowrap;
+}
+.trust-items { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+.trust-item { font-size: 12px; font-weight: 400; color: var(--mid); }
+.trust-dot { color: var(--muted); font-size: 10px; }
+
+/* ── WHO I HELP ── */
+.who-section { border-bottom: 1px solid var(--border); }
+.who-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--border);
+}
+.who-card {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid var(--border);
+  transition: background 0.2s;
+}
+.who-card:last-child { border-right: none; }
+.who-card:hover { background: var(--bg2); }
+.who-icon {
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.25rem;
+  color: var(--black);
+  transition: border-color 0.2s, background 0.2s;
+}
+.who-card:hover .who-icon { border-color: var(--black); background: var(--black); color: white; }
+.who-title { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+.who-body { font-size: 13px; font-weight: 300; color: var(--mid); line-height: 1.7; }
+
+/* ── PACKAGES ── */
+.packages-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.pkg-card {
+  padding: 2.5rem 2.5rem 2rem;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 1.25rem;
+  position: relative;
+  transition: background 0.2s;
+}
+.pkg-card:last-child { border-right: none; }
+.pkg-featured { background: var(--black); }
+.pkg-tag {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pkg-featured .pkg-tag { color: rgba(255,255,255,0.4); }
+.pkg-title {
+  font-family: var(--serif);
+  font-size: 28px; font-weight: 400; letter-spacing: -0.3px;
+  color: var(--black); line-height: 1.1;
+}
+.pkg-featured .pkg-title { color: white; }
+.pkg-sub {
+  font-size: 13px; font-weight: 300;
+  color: var(--muted); line-height: 1.6;
+}
+.pkg-featured .pkg-sub { color: rgba(255,255,255,0.5); }
+.pkg-list {
+  list-style: none; display: flex; flex-direction: column; gap: 8px;
+  flex: 1;
+}
+.pkg-list li {
+  font-size: 13px; font-weight: 300; color: var(--mid);
+  padding-left: 16px; position: relative; line-height: 1.5;
+}
+.pkg-list li::before {
+  content: ''; position: absolute; left: 0; top: 9px;
+  width: 6px; height: 1px; background: var(--black);
+}
+.pkg-featured .pkg-list li { color: rgba(255,255,255,0.65); }
+.pkg-featured .pkg-list li::before { background: white; }
+.pkg-outcome {
+  font-size: 12px; font-weight: 500;
+  color: var(--black);
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+}
+.pkg-featured .pkg-outcome {
+  color: rgba(255,255,255,0.9);
+  border-color: rgba(255,255,255,0.1);
+}
+.btn-pkg {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 12px 0;
+  display: block; text-align: center;
+  border: 1px solid var(--border);
+  color: var(--black); text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.btn-pkg:hover { background: var(--black); color: white; border-color: var(--black); }
+.pkg-featured .btn-pkg {
+  background: white; color: var(--black); border-color: white;
+}
+.pkg-featured .btn-pkg:hover { background: #e0e0e0; }
+.pkg-note {
+  padding: 1.5rem 2.5rem;
+  font-size: 13px; font-weight: 300; color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.pkg-note a { color: var(--black); text-decoration: underline; }
+
+/* ── BEFORE / AFTER ── */
+.before-after {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1rem; margin: 1rem 0;
+}
+.ba-col { display: flex; flex-direction: column; gap: 6px; }
+.ba-label {
+  font-size: 9px; font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; padding: 3px 10px;
+  display: inline-block; border-radius: 100px;
+}
+.ba-before { background: #f3f0eb; color: var(--muted); }
+.ba-after { background: var(--black); color: white; }
+.ba-text {
+  font-size: 12px; font-weight: 300; color: var(--mid); line-height: 1.65;
+}
+
+/* ── TESTIMONIALS ── */
+.testimonials-sec { border-bottom: 1px solid var(--border); }
+.testimonials-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+}
+.tcard {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 1.5rem;
+}
+.tcard:last-child { border-right: none; }
+.tcard-quote {
+  font-family: var(--serif);
+  font-size: 17px; font-weight: 300; font-style: italic;
+  color: var(--black); line-height: 1.6;
+  flex: 1;
+}
+.tcard-quote::before { content: '"'; }
+.tcard-quote::after { content: '"'; }
+.tcard-author { display: flex; align-items: center; gap: 12px; }
+.tcard-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--bg3); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 500; color: var(--mid);
+  flex-shrink: 0;
+}
+.tcard-name { font-size: 13px; font-weight: 500; }
+.tcard-role { font-size: 11px; font-weight: 300; color: var(--muted); }
+
+/* ── MID-PAGE CTA ── */
+.mid-cta {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.mid-cta-inner {
+  padding: 5rem 3rem;
+  text-align: center;
+  max-width: 700px; margin: 0 auto;
+}
+.mid-cta-h {
+  font-family: var(--sans);
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: 400; letter-spacing: -0.5px;
+  line-height: 1.1; margin-bottom: 1rem;
+}
+.mid-cta-sub {
+  font-size: 15px; font-weight: 300;
+  color: var(--mid); line-height: 1.75;
+  margin-bottom: 2rem;
+}
+
 </style>
 </head>
 <body>
+
 
 <!-- NAV -->
 <nav id="nav">
@@ -864,292 +1136,437 @@ footer {
     </div>
     <div class="nav-logo-text">
       <span>NAZANIN TALEI</span>
-      <span style="font-weight:300;opacity:.6;">MARKETING · AI</span>
+      <span style="font-weight:300;opacity:.6;">AI-POWERED MARKETING</span>
     </div>
   </a>
   <ul class="nav-links">
+    <li><a href="#who">Who I help</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Results</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#ai">AI Lab</a></li>
-    <li><a href="#experience">Experience</a></li>
   </ul>
+  <a href="mailto:nazanintalei@gmail.com?subject=Free Strategy Call" class="nav-cta-btn">Book a free call</a>
 </nav>
 
-<!-- HERO -->
+<!-- ══ HERO ══ -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-circle"></div>
 
   <div class="hero-content">
-    <div class="hero-label">Nazanin Talei</div>
-    <h1 class="hero-heading">Elevating Brands<br>With Data-Driven<br>Strategies</h1>
-    <p class="hero-sub">Providing business-changing marketing that actually drives profitable growth — NOT vanity metrics.</p>
-    <a href="#about" class="hero-cta">Let's Get Going <span class="hero-cta-arrow">›</span></a>
+    <div class="hero-label">AI-Powered Marketing Strategist · Global Growth Expert</div>
+    <h1 class="hero-heading">AI-Driven Marketing<br>&amp; Content That Turns<br><em style="font-family:var(--serif);font-style:italic;color:rgba(255,255,255,0.75);">Attention Into Revenue.</em></h1>
+    <p class="hero-sub">I help e-commerce brands, startups, and global businesses scale using AI-powered content, performance marketing, and data-driven strategy.</p>
+    <div class="hero-proof">
+      <span class="hero-proof-item"><strong>8M+</strong> views</span>
+      <span class="hero-proof-divider">·</span>
+      <span class="hero-proof-item"><strong>+25%</strong> ROI</span>
+      <span class="hero-proof-divider">·</span>
+      <span class="hero-proof-item">Proven across the <strong>US, China &amp; Middle East</strong></span>
+    </div>
+    <div class="hero-ctas">
+      <a href="mailto:nazanintalei@gmail.com?subject=Free Strategy Call" class="btn-hero-primary">Book a free strategy call</a>
+      <a href="#work" class="btn-hero-ghost">View case studies ›</a>
+    </div>
   </div>
 
-  <!-- Hero right: circular profile + two video cards -->
   <div class="hero-media">
-
-    <!-- Circular profile picture -->
     <div class="hero-profile-frame" id="hero-profile-wrap">
       <img id="hero-profile-img" src="" alt="Nazanin Talei">
       <div class="hero-profile-ph" id="hero-profile-ph">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
         <span>profile.jpg</span>
       </div>
     </div>
-
-    <!-- Two video cards side by side -->
-    <div class="hero-videos-row">
-
-      <!-- VIDEO 1 — replace video1.mp4 with your file -->
-      <div class="media-card media-card-1">
-        <div class="media-badge media-badge-tiktok">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="#000"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z"/></svg>
-        </div>
-        <video id="vid1" src="video1.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
-        <div class="media-card-ph" id="vid1-ph">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span>Add video1.mp4<br>to your folder</span>
-        </div>
-      </div>
-
-      <!-- VIDEO 2 — replace video2.mp4 with your file -->
-      <div class="media-card media-card-2">
-        <div class="media-badge media-badge-ig">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#000" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#000" stroke="none"/></svg>
-        </div>
-        <video id="vid2" src="video2.mp4" autoplay muted loop playsinline webkit-playsinline preload="auto" style="width:100%;height:100%;object-fit:cover;display:none;"></video>
-        <div class="media-card-ph" id="vid2-ph">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span>Add video2.mp4<br>to your folder</span>
-        </div>
-      </div>
-
-    </div>
   </div>
 </section>
 
-<!-- WELCOME -->
-<section class="welcome rv" id="about">
-  <div class="welcome-ghost">WELCOME</div>
-  <div class="welcome-label">Welcome to</div>
-  <div class="welcome-name">Nazanin Talei</div>
-  <div class="welcome-sub">Marketing Strategist · Data Analyst · AI Creator</div>
-  <p class="welcome-body">A results-oriented, data-driven marketing professional with hands-on international experience across the Middle East, Asia, and North America. Adept at using analytics to inform global marketing strategies, optimise performance, and deliver measurable results. Skilled in social media, strategic planning, and cross-cultural communication to drive success across diverse markets.</p>
-  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-    <a href="#work" class="btn-dark">View case studies</a>
-    <a href="resume.pdf" class="btn-outline-dark" download>Download CV</a>
-  </div>
-</section>
-
-<!-- BIO SPLIT -->
-<div class="bio-split rv">
-  <div class="bio-left">
-    <div>
-      <span class="section-label">About me</span>
-      <h2 class="bio-heading">Strategy.<br><em>Analytics.</em><br>Impact.</h2>
-    </div>
-    <p class="bio-body">I bridge global markets using data, creativity, and AI. With 6+ years of international consulting experience and a master's in Marketing Analytics, I build marketing systems that scale — not just campaigns that run.</p>
-    <div class="contact-links">
-      <a href="/cdn-cgi/l/email-protection#b9d7d8c3d8d7d0d7cdd8d5dcd0f9ded4d8d0d597dad6d4">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        <span class="__cf_email__" data-cfemail="254b445f444b4c4b514449404c654248444c490b464a48">[email&#160;protected]</span>
-      </a>
-      <a href="tel:9496784841">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.1-8.59A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 5.55 5.55l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
-        949.678.4841
-      </a>
-      <a href="https://www.linkedin.com/in/nazanintalei" target="_blank">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        linkedin.com/in/nazanintalei
-      </a>
-    </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <span class="chip-filled">English</span>
-      <span class="chip-filled">Mandarin</span>
-      <span class="chip-filled">Persian</span>
-    </div>
-  </div>
-  <div class="bio-right">
-    <!-- Profile photo — replace profile.jpg -->
-    <img class="bio-right-img" id="profile-img" src="" alt="Nazanin Talei">
-    <div class="bio-right-ph" id="profile-placeholder">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      <span>Upload profile.jpg</span>
-    </div>
+<!-- ══ TRUST BAR ══ -->
+<div class="trust-bar rv">
+  <div class="trust-label">Experience with</div>
+  <div class="trust-items">
+    <span class="trust-item">🇺🇸 United States</span>
+    <span class="trust-dot">·</span>
+    <span class="trust-item">🇨🇳 China</span>
+    <span class="trust-dot">·</span>
+    <span class="trust-item">🇮🇷 Middle East</span>
+    <span class="trust-dot">·</span>
+    <span class="trust-item">Chamber of Commerce</span>
+    <span class="trust-dot">·</span>
+    <span class="trust-item">CSULB — Published Research</span>
+    <span class="trust-dot">·</span>
+    <span class="trust-item">Sunta International · Shanghai</span>
   </div>
 </div>
 
-<!-- STATS -->
+<!-- ══ STATS ══ -->
 <div class="stats-strip rv">
   <div class="stat-item">
-    <span class="stat-label-top">Campaign ROI</span>
-    <div class="stat-value">+25%</div>
-    <div class="stat-desc">Average improvement in campaign return on investment</div>
+    <span class="stat-label-top">Viral reach</span>
+    <div class="stat-value">8M+</div>
+    <div class="stat-desc">Views on a single AI video — the right strategy changes everything</div>
   </div>
   <div class="stat-item">
-    <span class="stat-label-top">Product adoption</span>
-    <div class="stat-value">+20%</div>
-    <div class="stat-desc">Increase in product adoption through data-led strategies</div>
+    <span class="stat-label-top">Average ROI lift</span>
+    <div class="stat-value">+25%</div>
+    <div class="stat-desc">Campaign return on investment improvement for clients</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-label-top">Markets</span>
+    <div class="stat-value">3</div>
+    <div class="stat-desc">US · China · Middle East — real on-the-ground experience</div>
   </div>
   <div class="stat-item">
     <span class="stat-label-top">Languages</span>
     <div class="stat-value">3</div>
-    <div class="stat-desc">Fluent in English, Mandarin Chinese, and Persian</div>
-  </div>
-  <div class="stat-item">
-    <span class="stat-label-top">Academic recognition</span>
-    <div class="stat-value">Top 1%</div>
-    <div class="stat-desc">CSULB Dean's List — College of Business graduate scholars</div>
+    <div class="stat-desc">English · Mandarin · Persian — I speak your market's language</div>
   </div>
 </div>
 
-<!-- PULL QUOTE -->
+<!-- ══ WHO I HELP ══ -->
+<section class="who-section rv" id="who">
+  <div class="section-hdr">
+    <span class="sh-num">01</span>
+    <h2 class="sh-title">Who I Work With</h2>
+  </div>
+  <div class="who-intro rv">I partner with brands that are ready to grow — not guess.</div>
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+      </div>
+      <h3 class="who-title">E-commerce brands</h3>
+      <p class="who-body">Looking to scale sales with smarter paid ads, better creative, and a funnel that actually converts.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <h3 class="who-title">Startups</h3>
+      <p class="who-body">Building traction and visibility — you need strategy and execution that moves fast and delivers measurable results.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+      </div>
+      <h3 class="who-title">Personal brands &amp; creators</h3>
+      <p class="who-body">Aiming for viral growth — you want AI-powered content that builds an audience and turns followers into revenue.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </div>
+      <h3 class="who-title">Global expansion</h3>
+      <p class="who-body">Companies expanding into global markets — especially the US, China, and the Middle East — who need cultural fluency, not just translation.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PULL QUOTE ══ -->
 <div class="pull-quote rv">
-  <blockquote>"Marketing that actually moves the needle — not just vanity metrics."</blockquote>
+  <blockquote>"I don't just create campaigns — I build systems that keep generating results."</blockquote>
 </div>
 
-<!-- WORK -->
+<!-- ══ SERVICES ══ -->
+<section id="services">
+  <div class="section-hdr rv">
+    <span class="sh-num">02</span>
+    <h2 class="sh-title">How I Help You Grow</h2>
+  </div>
+  <div class="packages-grid rv">
+
+    <div class="pkg-card pkg-featured">
+      <div class="pkg-tag">Most popular</div>
+      <h3 class="pkg-title">Growth System</h3>
+      <p class="pkg-sub">A complete marketing system designed to increase revenue.</p>
+      <ul class="pkg-list">
+        <li>Paid ads strategy &amp; optimization</li>
+        <li>AI-powered content creation</li>
+        <li>Funnel &amp; conversion optimization</li>
+        <li>Monthly analytics &amp; reporting</li>
+        <li>Weekly strategy sessions</li>
+      </ul>
+      <div class="pkg-outcome">→ Outcome: More sales, better ROI, scalable growth in 60–90 days</div>
+      <a href="mailto:nazanintalei@gmail.com?subject=Growth System Enquiry" class="btn-pkg">Get started →</a>
+    </div>
+
+    <div class="pkg-card">
+      <div class="pkg-tag">AI-powered</div>
+      <h3 class="pkg-title">Viral Content Engine</h3>
+      <p class="pkg-sub">Content built to stop scrolling and drive engagement.</p>
+      <ul class="pkg-list">
+        <li>TikTok &amp; short-form strategy</li>
+        <li>AI video production</li>
+        <li>Hook &amp; storytelling frameworks</li>
+        <li>Platform-specific optimisation</li>
+        <li>Performance tracking &amp; iteration</li>
+      </ul>
+      <div class="pkg-outcome">→ Outcome: High-performing content with viral potential</div>
+      <a href="mailto:nazanintalei@gmail.com?subject=Viral Content Engine Enquiry" class="btn-pkg">Get started →</a>
+    </div>
+
+    <div class="pkg-card">
+      <div class="pkg-tag">International</div>
+      <h3 class="pkg-title">Global Market Strategy</h3>
+      <p class="pkg-sub">Expand your business with confidence across international markets.</p>
+      <ul class="pkg-list">
+        <li>Market research &amp; positioning</li>
+        <li>Localisation strategy</li>
+        <li>Cross-cultural messaging</li>
+        <li>Platform strategy per market</li>
+        <li>Go-to-market roadmap</li>
+      </ul>
+      <div class="pkg-outcome">→ Outcome: Successful market entry — US · China · Middle East</div>
+      <a href="mailto:nazanintalei@gmail.com?subject=Global Market Strategy Enquiry" class="btn-pkg">Get started →</a>
+    </div>
+
+  </div>
+  <div class="pkg-note rv">Not sure which is right for you? <a href="mailto:nazanintalei@gmail.com?subject=Free Strategy Call">Book a free 30-min strategy call</a> — no pitch, just clarity.</div>
+</section>
+
+<!-- ══ CASE STUDIES ══ -->
 <section id="work">
   <div class="section-hdr rv">
-    <span class="sh-num">01</span>
-    <h2 class="sh-title">Selected Work</h2>
+    <span class="sh-num">03</span>
+    <h2 class="sh-title">Results That Speak</h2>
   </div>
   <div class="case-grid">
 
+    <!-- CASE 1 -->
     <div class="case-item rv">
       <div class="case-left">
-        <div>
-          <span class="case-tag">Global Strategy</span>
-          <div class="case-metric">+25%</div>
-          <div class="case-title">Campaign ROI — Sunta International</div>
-          <p class="case-body">Optimized global marketing strategies through data analysis, leading to a 20% increase in product adoption and 25% improvement in campaign ROI. Delivered Tableau dashboards to C-suite stakeholders across Shanghai and international markets.</p>
+        <span class="case-tag">Performance Marketing · Global Strategy</span>
+        <div class="case-metric">+25% ROI</div>
+        <div class="case-title">+25% ROI Increase — Global Campaign Optimisation</div>
+        <div class="before-after">
+          <div class="ba-col">
+            <div class="ba-label ba-before">Before</div>
+            <p class="ba-text">Campaigns lacked data-driven targeting and underperformed in international markets. Leadership had no visibility into what was working.</p>
+          </div>
+          <div class="ba-col">
+            <div class="ba-label ba-after">After</div>
+            <p class="ba-text">Rebuilt strategy using analytics, audience segmentation, and cross-market insights. Data dashboards now used by leadership for all decisions.</p>
+          </div>
         </div>
         <div class="case-meta">
-          <div class="case-meta-item"><span class="case-meta-label">Duration</span><span class="case-meta-val">6 Years</span></div>
-          <div class="case-meta-item"><span class="case-meta-label">Markets</span><span class="case-meta-val">Global</span></div>
-          <div class="case-meta-item"><span class="case-meta-label">ROI lift</span><span class="case-meta-val">25%</span></div>
+          <div class="case-meta-item"><span class="case-meta-label">ROI lift</span><span class="case-meta-val">+25%</span></div>
+          <div class="case-meta-item"><span class="case-meta-label">Adoption</span><span class="case-meta-val">+20%</span></div>
+          <div class="case-meta-item"><span class="case-meta-label">Market</span><span class="case-meta-val">China + Global</span></div>
         </div>
-        <a href="#" class="btn-watch">View Details ›</a>
       </div>
       <div class="case-right">
-        <img src="project3.jpg" alt="Work 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="case-right-ph">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>project3.jpg</span>
-        </div>
-        <div class="case-right-label">Marketing strategy<br>& analytics</div>
+        <img src="project3.jpg" alt="Campaign optimisation" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="case-right-ph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add project3.jpg</span></div>
+        <div class="case-right-label">Global<br>strategy</div>
       </div>
     </div>
 
+    <!-- CASE 2 -->
     <div class="case-item rv">
       <div class="case-left">
-        <div>
-          <span class="case-tag">Data & Analytics</span>
-          <div class="case-metric">Nike</div>
-          <div class="case-title">Omnichannel Strategy Evaluation</div>
-          <p class="case-body">Led capstone project evaluating Nike's omnichannel marketing approach using machine learning and advanced analytics. Applied K-means clustering, regression models in SPSS, and interactive Tableau dashboards to deliver actionable insights.</p>
+        <span class="case-tag">AI Video · Content Strategy · Organic Growth</span>
+        <div class="case-metric">8M+ Views</div>
+        <div class="case-title">8M+ Views — AI-Powered Viral Video</div>
+        <div class="before-after">
+          <div class="ba-col">
+            <div class="ba-label ba-before">Before</div>
+            <p class="ba-text">Low engagement and inconsistent content performance. No clear strategy aligned with platform algorithms or audience behaviour.</p>
+          </div>
+          <div class="ba-col">
+            <div class="ba-label ba-after">After</div>
+            <p class="ba-text">Developed AI-driven content strategy aligned with platform algorithms and audience behaviour. Result: 8,000,000+ organic views, massive brand visibility, and strong audience engagement.</p>
+          </div>
         </div>
         <div class="case-meta">
-          <div class="case-meta-item"><span class="case-meta-label">Tools</span><span class="case-meta-val">Python, SPSS</span></div>
-          <div class="case-meta-item"><span class="case-meta-label">Method</span><span class="case-meta-val">ML + Tableau</span></div>
+          <div class="case-meta-item"><span class="case-meta-label">Views</span><span class="case-meta-val">8,000,000+</span></div>
+          <div class="case-meta-item"><span class="case-meta-label">Ad spend</span><span class="case-meta-val">$0</span></div>
+          <div class="case-meta-item"><span class="case-meta-label">Type</span><span class="case-meta-val">Organic AI</span></div>
         </div>
-        <a href="#" class="btn-watch">View Details ›</a>
+        <a href="#ai-video" class="btn-watch">Watch the video →</a>
       </div>
       <div class="case-right">
-        <img src="project4.jpg" alt="Work 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="case-right-ph">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>project4.jpg</span>
+        <img src="project2.jpg" alt="Viral video" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="case-right-ph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add project2.jpg</span></div>
+        <div class="case-right-label">8M+ organic<br>views</div>
+      </div>
+    </div>
+
+    <!-- CASE 3 -->
+    <div class="case-item rv">
+      <div class="case-left">
+        <span class="case-tag">Analytics · Published Research</span>
+        <div class="case-metric">Nike</div>
+        <div class="case-title">Published Research — Nike Omnichannel Strategy</div>
+        <div class="before-after">
+          <div class="ba-col">
+            <div class="ba-label ba-before">Challenge</div>
+            <p class="ba-text">Brands needed a rigorous, replicable framework to evaluate omnichannel marketing effectiveness — beyond vanity metrics.</p>
+          </div>
+          <div class="ba-col">
+            <div class="ba-label ba-after">Outcome</div>
+            <p class="ba-text">Published graduate-level research using Python, ML, K-means clustering, and SPSS regression — delivering a data-backed framework now available for real business use.</p>
+          </div>
         </div>
-        <div class="case-right-label">Omnichannel<br>research</div>
+        <div class="case-meta">
+          <div class="case-meta-item"><span class="case-meta-label">Method</span><span class="case-meta-val">ML + SPSS</span></div>
+          <div class="case-meta-item"><span class="case-meta-label">Status</span><span class="case-meta-val">Published</span></div>
+          <div class="case-meta-item"><span class="case-meta-label">Tools</span><span class="case-meta-val">Python, Tableau</span></div>
+        </div>
+      </div>
+      <div class="case-right">
+        <img src="project4.jpg" alt="Research" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+        <div class="case-right-ph"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Add project4.jpg</span></div>
+        <div class="case-right-label">Published<br>research</div>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- VIDEO -->
-<section class="video-section rv" id="ai">
+<!-- ══ TRUST / TESTIMONIALS ══ -->
+<section class="testimonials-sec rv">
   <div class="section-hdr">
-    <span class="sh-num">02</span>
-    <h2 class="sh-title">AI Video Showcase</h2>
+    <span class="sh-num">04</span>
+    <h2 class="sh-title">Results That Build Trust</h2>
+  </div>
+  <div class="trust-statement rv">
+    Worked with international teams and brands across China, the US, and the Middle East — delivering measurable growth through data-driven marketing.
+  </div>
+  <div class="testimonials-grid">
+    <div class="tcard">
+      <div class="tcard-quote">Nazanin combines strategy and creativity in a way that actually delivers results. Her understanding of global markets is rare and genuinely valuable.</div>
+      <div class="tcard-author">
+        <div class="tcard-avatar">C</div>
+        <div>
+          <div class="tcard-name">Client Name</div>
+          <div class="tcard-role">CEO · replace with real testimonial</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-quote">Her AI content strategy was unlike anything we had tried before. The results spoke for themselves — viral content driving real leads within weeks.</div>
+      <div class="tcard-author">
+        <div class="tcard-avatar">M</div>
+        <div>
+          <div class="tcard-name">Client Name</div>
+          <div class="tcard-role">Founder · replace with real testimonial</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="tcard-quote">Data-driven, creative, and incredibly strategic. She doesn't just run campaigns — she builds systems that keep working.</div>
+      <div class="tcard-author">
+        <div class="tcard-avatar">A</div>
+        <div>
+          <div class="tcard-name">Client Name</div>
+          <div class="tcard-role">Marketing Director · replace with real testimonial</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ MID-PAGE CTA ══ -->
+<div class="mid-cta rv">
+  <div class="mid-cta-inner">
+    <h2 class="mid-cta-h">Let's Build Something That Grows</h2>
+    <p class="mid-cta-sub">If you're ready to scale your brand with smarter strategy and high-performing content, let's talk.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <a href="mailto:nazanintalei@gmail.com?subject=Free Strategy Call" class="btn-dark" style="display:inline-block;padding:16px 40px;font-size:12px;letter-spacing:0.12em;">Book a free strategy call →</a>
+      <a href="mailto:nazanintalei@gmail.com" class="btn-outline-dark" style="display:inline-block;padding:16px 36px;font-size:12px;letter-spacing:0.12em;">Contact me →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══ VIDEO SHOWCASE ══ -->
+<section class="video-section rv" id="ai-video">
+  <div class="section-hdr">
+    <span class="sh-num">05</span>
+    <h2 class="sh-title">AI Content in Action</h2>
   </div>
   <div class="video-inner">
-    <div class="video-wrap">
-      <!--
-        TO ADD YOUR VIDEO:
-        YouTube:  <iframe src="https://www.youtube.com/embed/YOUR_ID" allowfullscreen></iframe>
-        Vimeo:    <iframe src="https://player.vimeo.com/video/YOUR_ID" allowfullscreen></iframe>
-        Local:    <video src="your-video.mp4" controls style="width:100%;height:100%;"></video>
-        Delete the vphold div once you add your video.
-      -->
-      <div class="vphold">
-        <div class="vplay">
-          <svg width="20" height="20" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+    <div class="video-two-col">
+      <div>
+        <div class="video-wrap">
+          <!-- VIDEO 1: Replace src with your file or YouTube embed
+               YouTube: <iframe src="https://www.youtube.com/embed/YOUR_ID" allowfullscreen></iframe>
+               Local:   <video src="video1.mp4" controls style="width:100%;height:100%;"></video>
+          -->
+          <div class="vphold">
+            <div class="vplay"><svg width="20" height="20" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white"/></svg></div>
+            <span>Add video1.mp4 or embed URL</span>
+          </div>
         </div>
-        <span>Add your video link in the HTML (see comment)</span>
+        <div class="video-meta" style="padding:1rem 0 0;">
+          <h3>Your video title</h3>
+          <p>Describe tools used and the result</p>
+        </div>
       </div>
-    </div>
-    <div class="video-meta">
-      <h3>Your AI video title here</h3>
-      <p>Add a short description of your featured video — what it shows, what tools you used, and what makes it special.</p>
+      <div>
+        <div class="video-wrap">
+          <!-- VIDEO 2: Replace with your embed -->
+          <div class="vphold">
+            <div class="vplay"><svg width="20" height="20" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3" fill="white"/></svg></div>
+            <span>Add video2.mp4 or embed URL</span>
+          </div>
+        </div>
+        <div class="video-meta" style="padding:1rem 0 0;">
+          <h3>Your video title</h3>
+          <p>Describe tools used and the result</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- AI PROJECTS -->
-<section>
+<!-- ══ ABOUT ══ -->
+<section id="about">
   <div class="section-hdr rv">
-    <span class="sh-num">03</span>
-    <h2 class="sh-title">Who We Choose to Partner With</h2>
+    <span class="sh-num">06</span>
+    <h2 class="sh-title">About Nazanin</h2>
   </div>
-  <div class="industry-grid rv">
-    <div class="ind-card">
-      <div class="ind-card-img">
-        <img src="project5.jpg" alt="AI Project 1" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="ind-card-ph" style="display:none;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>project5.jpg</span>
-        </div>
-        <div class="ind-overlay"></div>
-        <div class="ind-card-type">AI Creation</div>
-        <div class="ind-label">AI<br>Marketing</div>
+  <div class="bio-split rv">
+    <div class="bio-left">
+      <div>
+        <span class="section-label">Who I am</span>
+        <h2 class="bio-heading">Global.<br><em>Data-Led.</em><br>Results-Driven.</h2>
+      </div>
+      <p class="bio-body">I'm a marketing strategist with global experience across China, the Middle East, and North America.<br><br>I've worked inside international companies, led high-performing campaigns, and created content reaching millions. My approach combines data, creativity, and AI — not just to generate attention, but to turn it into real business results.</p>
+      <div class="contact-links">
+        <a href="mailto:nazanintalei@gmail.com">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 010-2.06 0L2 7"/></svg>
+          nazanintalei@gmail.com
+        </a>
+        <a href="tel:9496784841">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
+          949.678.4841
+        </a>
+        <a href="https://www.linkedin.com/in/nazanintalei" target="_blank">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          linkedin.com/in/nazanintalei
+        </a>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <span class="chip-filled">English</span>
+        <span class="chip-filled">Mandarin</span>
+        <span class="chip-filled">Persian</span>
       </div>
     </div>
-    <div class="ind-card">
-      <div class="ind-card-img">
-        <img src="project6.jpg" alt="AI Project 2" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="ind-card-ph" style="display:none;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>project6.jpg</span>
-        </div>
-        <div class="ind-overlay"></div>
-        <div class="ind-card-type">AI Video</div>
-        <div class="ind-label">AI<br>Video</div>
-      </div>
-    </div>
-    <div class="ind-card">
-      <div class="ind-card-img">
-        <img src="project1.jpg" alt="AI Project 3" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-        <div class="ind-card-ph" style="display:none;">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-          <span>project1.jpg</span>
-        </div>
-        <div class="ind-overlay"></div>
-        <div class="ind-card-type">Data & AI</div>
-        <div class="ind-label">Data<br>Analytics</div>
+    <div class="bio-right">
+      <img class="bio-right-img" id="profile-img" src="" alt="Nazanin Talei">
+      <div class="bio-right-ph" id="profile-placeholder">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        <span>Upload profile.jpg</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
+<!-- ══ EXPERIENCE ══ -->
 <section id="experience">
   <div class="section-hdr rv">
-    <span class="sh-num">04</span>
-    <h2 class="sh-title">Career History</h2>
+    <span class="sh-num">07</span>
+    <h2 class="sh-title">Where I've Worked</h2>
   </div>
   <div class="timeline rv">
     <div class="tline-item">
@@ -1161,10 +1578,9 @@ footer {
       <div class="tline-right">
         <div class="tline-role">Strategic Program Manager</div>
         <ul class="tline-bullets">
-          <li>Lead strategic planning and execution of programs supporting local businesses and cross-border partnerships.</li>
-          <li>Oversee digital marketing campaigns across social media and email to increase visibility and membership growth.</li>
-          <li>Collaborate with board members to design data-driven initiatives aligned with organizational goals.</li>
-          <li>Build partnerships with local businesses, nonprofits, and government agencies.</li>
+          <li>Lead digital marketing and strategic programs for local businesses and entrepreneurs.</li>
+          <li>Drive membership growth through email, social media, and community partnerships.</li>
+          <li>Design data-driven initiatives aligned with organisational growth goals.</li>
         </ul>
       </div>
     </div>
@@ -1177,9 +1593,9 @@ footer {
       <div class="tline-right">
         <div class="tline-role">Graduate Assistant — Marketing Strategy & Data Analytics</div>
         <ul class="tline-bullets">
-          <li>Analyzed consumer datasets using Python and SQL to optimize digital campaign performance.</li>
-          <li>Applied K-means clustering for market segmentation; built regression models in SPSS.</li>
-          <li>Designed interactive Tableau dashboards and led Nike omnichannel capstone with ML.</li>
+          <li>Analyzed consumer datasets using Python and SQL for global brands.</li>
+          <li>Built Tableau dashboards and applied ML + SPSS models for marketing insights.</li>
+          <li>Led published Nike omnichannel strategy research using advanced analytics.</li>
         </ul>
       </div>
     </div>
@@ -1192,9 +1608,9 @@ footer {
       <div class="tline-right">
         <div class="tline-role">Marketing Strategy Consultant</div>
         <ul class="tline-bullets">
-          <li>Drove 20% increase in product adoption and 25% improvement in campaign ROI.</li>
-          <li>Delivered Tableau dashboards to C-suite, aligning marketing insights with financial goals.</li>
-          <li>Tracked KPIs including CAC, conversion rates, and revenue growth cross-functionally.</li>
+          <li>Delivered +25% ROI improvement and +20% product adoption through data-driven strategy.</li>
+          <li>Built C-suite Tableau dashboards aligning marketing performance with financial goals.</li>
+          <li>Led go-to-market strategy and market research for cross-border expansion across Asia.</li>
         </ul>
       </div>
     </div>
@@ -1207,46 +1623,47 @@ footer {
       <div class="tline-right">
         <div class="tline-role">Business Development Intern</div>
         <ul class="tline-bullets">
-          <li>Identified market trends in healthcare technology to support client decision-making.</li>
-          <li>Reduced project turnaround time by 25% through streamlined workflows.</li>
+          <li>Identified market trends in healthcare technology to support strategic client decisions.</li>
+          <li>Reduced project turnaround time by 25% through workflow improvements.</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SKILLS -->
-<section id="skills">
+<!-- ══ SKILLS ══ -->
+<section>
   <div class="section-hdr rv">
-    <span class="sh-num">05</span>
-    <h2 class="sh-title">What I Work With</h2>
+    <span class="sh-num">08</span>
+    <h2 class="sh-title">Tools & Expertise</h2>
   </div>
   <div class="skills-band rv">
     <div class="skill-col">
-      <span class="skill-col-label">Technical skills</span>
+      <span class="skill-col-label">Marketing services</span>
       <div class="chips">
-        <span class="chip-filled">Python</span>
-        <span class="chip-filled">SQL</span>
-        <span class="chip-filled">Tableau</span>
-        <span class="chip-filled">SPSS</span>
-        <span class="chip-filled">Excel</span>
-        <span class="chip-filled">Machine learning</span>
-        <span class="chip-filled">NLP</span>
-        <span class="chip-filled">A/B testing</span>
-        <span class="chip-filled">AI</span>
+        <span class="chip-filled">Paid Ads</span>
+        <span class="chip-filled">AI Video</span>
+        <span class="chip-filled">SEO</span>
+        <span class="chip-filled">Social Media</span>
+        <span class="chip-filled">Email Marketing</span>
+        <span class="chip-filled">Content Strategy</span>
+        <span class="chip-filled">Brand Strategy</span>
+        <span class="chip-filled">Go-to-Market</span>
+        <span class="chip-filled">Market Research</span>
       </div>
     </div>
     <div class="skill-col">
-      <span class="skill-col-label">Marketing & analytics</span>
+      <span class="skill-col-label">Analytics & AI</span>
       <div class="chips">
-        <span class="chip">Digital marketing</span>
-        <span class="chip">Social media analytics</span>
-        <span class="chip">Branding</span>
-        <span class="chip">Market research</span>
-        <span class="chip">Consumer behavior</span>
-        <span class="chip">Go-to-market</span>
-        <span class="chip">SEO</span>
-        <span class="chip">Email marketing</span>
+        <span class="chip">Python</span>
+        <span class="chip">SQL</span>
+        <span class="chip">Tableau</span>
+        <span class="chip">SPSS</span>
+        <span class="chip">Machine learning</span>
+        <span class="chip">NLP</span>
+        <span class="chip">A/B testing</span>
+        <span class="chip">AI content tools</span>
+        <span class="chip">Google Analytics</span>
       </div>
     </div>
     <div class="skill-col">
@@ -1254,7 +1671,8 @@ footer {
       <p style="font-size:13px;font-weight:300;color:var(--mid);line-height:1.9;margin-bottom:1.5rem;">
         MS Marketing Analytics · CSULB<br>
         MBA + BS Electrical Engineering<br>
-        Amirkabir University of Technology
+        Amirkabir University of Technology<br>
+        Chinese Language · Fudan University
       </p>
       <span class="skill-col-label">Languages</span>
       <div class="chips">
@@ -1266,43 +1684,43 @@ footer {
   </div>
 </section>
 
-<!-- AWARDS -->
+<!-- ══ AWARDS ══ -->
 <section>
   <div class="section-hdr rv">
-    <span class="sh-num">06</span>
+    <span class="sh-num">09</span>
     <h2 class="sh-title">Recognition</h2>
   </div>
   <div class="awards-row rv">
     <div class="award-cell">
       <div class="award-ghost">01</div>
-      <span class="award-num">Award 01</span>
+      <span class="award-num">Academic</span>
       <div class="award-title">CSULB Dean's List</div>
-      <div class="award-body">Recognized among the top 1% of graduate students in the College of Business for academic excellence.</div>
+      <div class="award-body">Top 1% of graduate students in the College of Business — recognised for excellence in marketing analytics.</div>
     </div>
     <div class="award-cell">
       <div class="award-ghost">02</div>
-      <span class="award-num">Award 02</span>
+      <span class="award-num">Award</span>
       <div class="award-title">APSIH Award of Excellence</div>
-      <div class="award-body">Honored as an outstanding graduate at the master's level for academic achievement in business education.</div>
+      <div class="award-body">Outstanding graduate at the master's level for academic and professional achievement.</div>
     </div>
     <div class="award-cell">
       <div class="award-ghost">03</div>
-      <span class="award-num">Involvement</span>
+      <span class="award-num">Community</span>
       <div class="award-title">Social Media Manager — IAWF</div>
-      <div class="award-body">Leading content creation and engagement strategies for the Iranian American Women Foundation community.</div>
+      <div class="award-body">Leading content and engagement strategy for the Iranian American Women Foundation.</div>
     </div>
   </div>
 </section>
 
-<!-- CERTS -->
+<!-- ══ CERTS ══ -->
 <section class="certs-section rv">
   <div class="section-hdr">
-    <span class="sh-num">07</span>
+    <span class="sh-num">10</span>
     <h2 class="sh-title">Certifications</h2>
   </div>
   <div class="certs-inner">
     <span class="cert-pill">Google Digital Marketing & E-commerce</span>
-    <span class="cert-pill">Data Visualization — IBM</span>
+    <span class="cert-pill">Data Visualisation — IBM</span>
     <span class="cert-pill">Excel Basics for Data Analysis — IBM</span>
     <span class="cert-pill">Introduction to Data Analytics — IBM</span>
     <span class="cert-pill">Crash Course on Python</span>
@@ -1314,27 +1732,21 @@ footer {
   </div>
 </section>
 
-<!-- BIG ITALIC QUOTE -->
-<div class="big-italic rv">
-  <blockquote>"95% of businesses that invest in data-driven marketing see a meaningful increase in revenue growth."</blockquote>
-  <div class="big-italic-label">The Reality — Nazanin Talei</div>
-</div>
-
-<!-- CTA -->
+<!-- ══ FINAL CTA ══ -->
 <section class="cta-section rv">
-  <div class="cta-left">
-    <h2 class="cta-heading">Ready to build<br>something <em>bold?</em></h2>
+  <div class="cta-l">
+    <h2 class="cta-h">Let's build<br>something that<br><em>grows.</em></h2>
   </div>
-  <div class="cta-right">
-    <p class="cta-sub">Open to consulting projects, strategic partnerships, and full-time opportunities in marketing strategy and analytics.</p>
+  <div class="cta-r">
+    <p class="cta-sub">If you're ready to scale your brand with smarter strategy and high-performing content — let's talk. Book a free 30-minute call and get a clear picture of exactly what your business needs.</p>
     <div class="cta-btns">
-      <a href="/cdn-cgi/l/email-protection#0a646b706b6463647e6b666f634a6d676b636624696567" class="btn-wht">Get in touch</a>
-      <a href="https://www.linkedin.com/in/nazanintalei" target="_blank" class="btn-bdr">LinkedIn</a>
+      <a href="mailto:nazanintalei@gmail.com?subject=Free Strategy Call" class="btn-wht">Book a free strategy call</a>
+      <a href="mailto:nazanintalei@gmail.com" class="btn-bdr">Contact me</a>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ══ FOOTER ══ -->
 <footer>
   <div class="footer-logo">
     <div class="footer-logo-mark">
@@ -1343,14 +1755,14 @@ footer {
     <div class="footer-name">Nazanin Talei</div>
   </div>
   <div class="footer-links">
-    <a href="/cdn-cgi/l/email-protection#b3ddd2c9d2dddaddc7d2dfd6daf3d4ded2dadf9dd0dcde"><span class="__cf_email__" data-cfemail="5d333c273c333433293c3138341d3a303c3431733e3230">[email&#160;protected]</span></a>
+    <a href="mailto:nazanintalei@gmail.com">nazanintalei@gmail.com</a>
     <a href="tel:9496784841">949.678.4841</a>
     <a href="https://www.linkedin.com/in/nazanintalei" target="_blank">LinkedIn</a>
   </div>
-  <div class="footer-bottom">© 2025 Nazanin Talei · All Rights Reserved · Built with HTML · GitHub Pages</div>
+  <div class="footer-bottom">© 2025 Nazanin Talei · AI-Powered Marketing Consultant · All Rights Reserved</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // Nav scroll
 var nav = document.getElementById('nav');
 window.addEventListener('scroll', function() {
@@ -1384,7 +1796,7 @@ initVideo('vid2', 'vid2-ph');
 (function() {
   var exts = ['profile.jpg','profile.jpeg','profile.png','Profile.jpg','Profile.JPG','profile.JPG'];
   var img = document.getElementById('hero-profile-img');
-  var ph = document.getElementById('hero-profile-ph');
+    var ph = document.getElementById('hero-profile-ph');
   var i = 0;
   function tryNext() {
     if (i >= exts.length) { if(ph) ph.style.display='flex'; return; }
@@ -1396,7 +1808,7 @@ initVideo('vid2', 'vid2-ph');
   tryNext();
 })();
 
-// Profile image loader
+// Profile image loader (bio section)
 (function() {
   var exts = ['profile.jpg','profile.jpeg','profile.png','Profile.jpg','Profile.JPG','profile.JPG'];
   var img = document.getElementById('profile-img');
