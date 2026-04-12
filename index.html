@@ -812,7 +812,7 @@ footer {
 
   /* Prevent ANY horizontal overflow on mobile */
   .hero, .trust-bar, .stats-strip, .who-section, .who-grid,
-  .packages-grid, .case-grid, .case-item, .testimonials-sec,
+  .case-grid, .case-item, .testimonials-sec,
   .timeline, .skills-band, .awards-row, .cta-section,
   .mid-cta, .video-section, section, footer {
     max-width: 100vw;
@@ -831,17 +831,18 @@ footer {
   }
   .hero-media {
     order: 1;
-    min-height: unset;
-    max-height: unset;
-    height: 75vw;
-    max-height: 480px;
-    min-height: 300px;
+    height: 110vw;
+    max-height: 580px;
+    min-height: 380px;
   }
   .hero-profile-frame {
-    height: 75vw;
-    max-height: 480px;
-    min-height: 300px;
+    height: 110vw;
+    max-height: 580px;
+    min-height: 380px;
     border-radius: 0;
+  }
+  .hero-profile-frame img {
+    object-position: center 15%;
   }
   /* Remove the left gradient on mobile — not needed when stacked */
   .hero-profile-frame::before { display: none; }
@@ -878,8 +879,8 @@ footer {
   .who-grid { grid-template-columns: 1fr; }
   .who-card { border-right: none; border-bottom: 1px solid var(--border); }
   .who-card:last-child { border-bottom: none; }
-  .packages-grid { grid-template-columns: 1fr; }
-  .pkg-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .packages-grid { grid-template-columns: 1fr !important; overflow: visible !important; }
+  .pkg-card { border-right: none; border-bottom: 1px solid var(--border); max-width: 100%; }
   .pkg-featured { order: -1; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .tcard { border-right: none; border-bottom: 1px solid var(--border); }
@@ -892,6 +893,8 @@ footer {
   .industry-grid { grid-template-columns: 1fr; }
   .ind-card:nth-child(3) { grid-column: auto; }
   .ind-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .packages-grid { grid-template-columns: 1fr !important; }
+  .pkg-card { width: 100% !important; max-width: 100% !important; }
 }
 .who-intro {
   padding: 1.5rem 3rem;
@@ -1246,10 +1249,43 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
   margin-bottom: 2rem;
 }
 
+/* ── FLOATING CONTACT TAB ── */
+.contact-tab {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg) translateX(50%);
+  transform-origin: right center;
+  z-index: 300;
+  background: var(--black);
+  color: white;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 10px 22px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 6px 6px 0 0;
+  transition: background 0.2s, letter-spacing 0.2s;
+  white-space: nowrap;
+  box-shadow: -2px 0 12px rgba(0,0,0,0.15);
+}
+.contact-tab:hover {
+  background: #333;
+  letter-spacing: 0.18em;
+}
+
 </style>
 </head>
 <body>
 
+
+<!-- FLOATING CONTACT TAB -->
+<a href="#contact" class="contact-tab">Contact</a>
 
 <!-- NAV -->
 <nav id="nav">
@@ -1267,6 +1303,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
     <li><a href="#services">Services</a></li>
     <li><a href="#work">Results</a></li>
     <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="https://www.linkedin.com/in/nazanintalei" target="_blank" class="nav-cta-btn">LinkedIn</a>
 </nav>
@@ -1299,9 +1336,9 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
         949.678.4841
       </a>
       <span class="hero-contact-divider">·</span>
-      <a href="mailto:nazanintalei@gmail.com">
+      <a href="/cdn-cgi/l/email-protection#8ae4ebf0ebe4e3e4feebe6efe3caede7ebe3e6a4e9e5e7">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
-        nazanintalei@gmail.com
+        <span class="__cf_email__" data-cfemail="a9c7c8d3c8c7c0c7ddc8c5ccc0e9cec4c8c0c587cac6c4">[email&#160;protected]</span>
       </a>
     </div>
   </div>
@@ -1423,7 +1460,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
         <li>Weekly strategy sessions</li>
       </ul>
       <div class="pkg-outcome">→ Outcome: More sales, better ROI, scalable growth in 60–90 days</div>
-      <a href="mailto:nazanintalei@gmail.com" class="btn-pkg">Get started →</a>
+      <a href="/cdn-cgi/l/email-protection#7b151a011a1512150f1a171e123b1c161a121755181416" class="btn-pkg">Get started →</a>
     </div>
 
     <div class="pkg-card">
@@ -1438,7 +1475,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
         <li>Performance tracking &amp; iteration</li>
       </ul>
       <div class="pkg-outcome">→ Outcome: High-performing content with viral potential</div>
-      <a href="mailto:nazanintalei@gmail.com" class="btn-pkg">Get started →</a>
+      <a href="/cdn-cgi/l/email-protection#b6d8d7ccd7d8dfd8c2d7dad3dff6d1dbd7dfda98d5d9db" class="btn-pkg">Get started →</a>
     </div>
 
     <div class="pkg-card">
@@ -1453,11 +1490,11 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
         <li>Go-to-market roadmap</li>
       </ul>
       <div class="pkg-outcome">→ Outcome: Successful market entry — US · China · Middle East</div>
-      <a href="mailto:nazanintalei@gmail.com" class="btn-pkg">Get started →</a>
+      <a href="/cdn-cgi/l/email-protection#6c020d160d020502180d0009052c0b010d0500420f0301" class="btn-pkg">Get started →</a>
     </div>
 
   </div>
-  <div class="pkg-note rv">Have a question? Reach out at <a href="mailto:nazanintalei@gmail.com">nazanintalei@gmail.com</a> or call <a href="tel:9496784841">949.678.4841</a></div>
+  <div class="pkg-note rv">Have a question? Reach out at <a href="/cdn-cgi/l/email-protection#315f504b505f585f45505d545871565c50585d1f525e5c"><span class="__cf_email__" data-cfemail="137d7269727d7a7d67727f767a53747e727a7f3d707c7e">[email&#160;protected]</span></a> or call <a href="tel:9496784841">949.678.4841</a></div>
 </section>
 
 <!-- ══ CASE STUDIES ══ -->
@@ -1593,24 +1630,6 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 </section>
 
 <!-- ══ MID-PAGE CTA ══ -->
-<div class="mid-cta rv">
-  <div class="mid-cta-inner">
-    <h2 class="mid-cta-h">Let's Build Something That Grows</h2>
-    <p class="mid-cta-sub">If you're ready to scale your brand with smarter strategy and high-performing content, get in touch.</p>
-    <div class="mid-cta-contact">
-      <a href="tel:9496784841" class="mid-cta-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
-        949.678.4841
-      </a>
-      <span class="mid-cta-divider">·</span>
-      <a href="mailto:nazanintalei@gmail.com" class="mid-cta-link">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
-        nazanintalei@gmail.com
-      </a>
-    </div>
-  </div>
-</div>
-
 <!-- ══ VIDEO SHOWCASE ══ -->
 <section class="video-section rv" id="ai-video">
   <div class="section-hdr">
@@ -1716,9 +1735,9 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
       </div>
 
       <div class="contact-links">
-        <a href="mailto:nazanintalei@gmail.com">
+        <a href="/cdn-cgi/l/email-protection#c5aba4bfa4abacabb1a4a9a0ac85a2a8a4aca9eba6aaa8">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
-          nazanintalei@gmail.com
+          <span class="__cf_email__" data-cfemail="7c121d061d121512081d1019153c1b111d1510521f1311">[email&#160;protected]</span>
         </a>
         <a href="tel:9496784841">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
@@ -1939,7 +1958,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 </section>
 
 <!-- ══ FINAL CTA ══ -->
-<section class="cta-section rv">
+<section class="cta-section rv" id="contact">
   <div class="cta-inner">
     <div class="cta-eyebrow">Get in touch</div>
     <h2 class="cta-h">Let's build something<br>that <em>grows.</em></h2>
@@ -1949,9 +1968,9 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 12a19.79 19.79 0 01-3.1-8.59A2 2 0 013.56 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 8.5a16 16 0 005.55 5.55l.86-.86a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0121 16.92z"/></svg>
         949.678.4841
       </a>
-      <a href="mailto:nazanintalei@gmail.com" class="cta-pill">
+      <a href="/cdn-cgi/l/email-protection#e8868992898681869c89848d81a88f85898184c68b8785" class="cta-pill">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
-        nazanintalei@gmail.com
+        <span class="__cf_email__" data-cfemail="68060912090601061c09040d01280f05090104460b0705">[email&#160;protected]</span>
       </a>
       <a href="https://www.linkedin.com/in/nazanintalei" target="_blank" class="cta-pill">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -1963,15 +1982,11 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 
 <!-- ══ FOOTER ══ -->
 <footer>
-  <button class="footer-top-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
-    Back to top
-  </button>
   <div class="footer-name" style="font-size:13px;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.5);">Nazanin Talei</div>
   <div class="footer-bottom">© 2025 Nazanin Talei · AI-Powered Marketing Consultant · All Rights Reserved</div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Nav scroll
 var nav = document.getElementById('nav');
 window.addEventListener('scroll', function() {
@@ -2039,28 +2054,10 @@ window.addEventListener('scroll', revealAll, { passive: true });
     };
     t.onerror = function() {
       img.style.display = 'none';
+      var ph = img.nextElementSibling;
       if (ph) ph.style.display = 'flex';
     };
     t.src = p.file + '?v=' + Date.now();
-  });
-
-  // Also load service/industry card images with cache-busting
-  document.querySelectorAll('.ind-card-img img').forEach(function(img) {
-    var original = img.getAttribute('src');
-    if (!original || original.indexOf('?') !== -1) return;
-    var t = new Image();
-    t.onload = function() {
-      img.src = original + '?v=' + Date.now();
-      img.style.display = 'block';
-      var ph = img.nextElementSibling;
-      if (ph && ph.classList.contains('ind-card-ph')) ph.style.display = 'none';
-    };
-    t.onerror = function() {
-      img.style.display = 'none';
-      var ph = img.nextElementSibling;
-      if (ph) ph.style.display = 'flex';
-    };
-    t.src = original + '?v=' + Date.now();
     img.style.display = 'none';
   });
 })();
