@@ -107,12 +107,82 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
   pointer-events: none;
 }
 
-/* Hero text entrance animations */
-.hero-label   { animation: fadeUp 0.8s ease both; animation-delay: 0.2s; }
-.hero-heading { animation: fadeUp 0.9s ease both; animation-delay: 0.4s; }
-.hero-sub     { animation: fadeUp 0.9s ease both; animation-delay: 0.6s; }
-.hero-proof   { animation: fadeUp 0.9s ease both; animation-delay: 0.75s; }
-.hero-ctas    { animation: fadeUp 0.9s ease both; animation-delay: 0.9s; }
+/* ── HERO ENTRANCE — remove old fadeUp, replaced by JS word reveal ── */
+.hero-label   { opacity: 0; animation: fadeUp 0.7s ease both; animation-delay: 0.1s; }
+.hero-sub     { opacity: 0; animation: fadeUp 0.8s ease both; animation-delay: 1.4s; }
+.hero-proof   { opacity: 0; animation: fadeUp 0.8s ease both; animation-delay: 1.6s; }
+.hero-ctas    { opacity: 0; animation: fadeUp 0.8s ease both; animation-delay: 1.8s; }
+
+/* Word reveal — each word clips upward */
+.word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  line-height: 1.15;
+  padding-bottom: 0.05em;
+}
+.word-inner {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  animation: wordUp 0.7s cubic-bezier(.16,1,.3,1) both;
+}
+@keyframes wordUp {
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Glitch effect on italic em */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  color: inherit;
+  opacity: 0;
+  pointer-events: none;
+}
+.glitch-text::before {
+  color: #a8edea;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+}
+.glitch-text::after {
+  color: #fed6e3;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+}
+.glitch-text.glitching::before {
+  animation: glitchTop 0.15s steps(1) both;
+}
+.glitch-text.glitching::after {
+  animation: glitchBot 0.15s steps(1) both;
+}
+@keyframes glitchTop {
+  0%   { opacity: 0; transform: translate(0,0); }
+  20%  { opacity: 0.8; transform: translate(-3px, -2px); }
+  40%  { opacity: 0.6; transform: translate(3px, 1px); }
+  60%  { opacity: 0.8; transform: translate(-2px, 0); }
+  80%  { opacity: 0.4; transform: translate(2px, -1px); }
+  100% { opacity: 0; transform: translate(0,0); }
+}
+@keyframes glitchBot {
+  0%   { opacity: 0; transform: translate(0,0); }
+  20%  { opacity: 0.7; transform: translate(3px, 2px); }
+  40%  { opacity: 0.5; transform: translate(-3px, -1px); }
+  60%  { opacity: 0.7; transform: translate(2px, 0); }
+  80%  { opacity: 0.3; transform: translate(-2px, 1px); }
+  100% { opacity: 0; transform: translate(0,0); }
+}
+
+/* Parallax wrapper */
+.hero-parallax {
+  will-change: transform;
+}
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(28px); }
@@ -1492,7 +1562,7 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
 
   <div class="hero-content">
     <div class="hero-label">AI-Powered Marketing Strategist · Global Growth Expert</div>
-    <h1 class="hero-heading">AI-Driven Marketing<br>&amp; Content That Turns<br><em style="font-family:var(--serif);font-style:italic;color:rgba(255,255,255,0.75);">Attention Into Revenue.</em></h1>
+    <h1 class="hero-heading hero-parallax" id="hero-heading">AI-Driven Marketing<br>&amp; Content That Turns<br><em class="glitch-text" data-text="Attention Into Revenue." style="font-family:var(--serif);font-style:italic;color:rgba(255,255,255,0.75);">Attention Into Revenue.</em></h1>
     <p class="hero-sub">I help e-commerce brands, startups, and global businesses scale using AI-powered content, performance marketing, and data-driven strategy.</p>
     <div class="hero-proof">
       <span class="hero-proof-item"><strong>8M+</strong> views</span>
@@ -2306,6 +2376,71 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
       card.style.transform = '';
     });
   });
+})();
+
+// ── WORD REVEAL on hero heading ──
+(function() {
+  var h = document.getElementById('hero-heading');
+  if (!h) return;
+  // Collect text nodes and em separately
+  var lines = ['AI-Driven Marketing', '& Content That Turns'];
+  var container = h;
+  // Clear and rebuild with word-wrap spans
+  var originalHTML = h.innerHTML;
+  var glitchEl = h.querySelector('.glitch-text');
+
+  // Build word-wrapped version of first two lines
+  var newHTML = '';
+  var allWords = [];
+  lines.forEach(function(line) {
+    var words = line.split(' ');
+    words.forEach(function(word) { allWords.push(word); });
+    allWords.push('<br>');
+  });
+
+  var wordIndex = 0;
+  var builtHTML = '';
+  allWords.forEach(function(item) {
+    if (item === '<br>') {
+      builtHTML += '<br>';
+    } else {
+      var delay = (wordIndex * 0.09 + 0.3).toFixed(2);
+      builtHTML += '<span class="word-wrap"><span class="word-inner" style="animation-delay:' + delay + 's">' + item + '</span></span> ';
+      wordIndex++;
+    }
+  });
+
+  // Rebuild the heading
+  h.innerHTML = builtHTML + '<br>' + glitchEl.outerHTML.replace('class="glitch-text"', 'class="glitch-text" style="opacity:0;animation:fadeUp 0.8s ease both;animation-delay:' + (wordIndex * 0.09 + 0.5).toFixed(2) + 's;animation-fill-mode:both;"');
+})();
+
+// ── GLITCH trigger — fires every 4s ──
+(function() {
+  function triggerGlitch() {
+    var el = document.querySelector('.glitch-text');
+    if (!el) return;
+    el.classList.add('glitching');
+    setTimeout(function() { el.classList.remove('glitching'); }, 200);
+  }
+  // Start after heading has appeared
+  setTimeout(function() {
+    triggerGlitch();
+    setInterval(triggerGlitch, 4000);
+  }, 2800);
+})();
+
+// ── PARALLAX on hero heading ──
+(function() {
+  var el = document.querySelector('.hero-parallax');
+  var hero = document.querySelector('.hero');
+  if (!el || !hero) return;
+  window.addEventListener('scroll', function() {
+    var scrolled = window.scrollY;
+    var heroH = hero.offsetHeight;
+    if (scrolled > heroH) return;
+    var rate = scrolled * 0.18;
+    el.style.transform = 'translateY(' + rate + 'px)';
+  }, { passive: true });
 })();
 
 // Nav scroll
