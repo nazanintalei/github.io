@@ -1017,6 +1017,7 @@ footer {
     padding: 2.5rem 1.5rem 3rem;
     order: 2;
     background: #1c1c1b;
+    overflow: hidden;
   }
   .hero-media {
     order: 1;
@@ -2434,6 +2435,8 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
   var el = document.querySelector('.hero-parallax');
   var hero = document.querySelector('.hero');
   if (!el || !hero) return;
+  // Disable on mobile — causes overlap
+  if (window.innerWidth < 960) return;
   window.addEventListener('scroll', function() {
     var scrolled = window.scrollY;
     var heroH = hero.offsetHeight;
