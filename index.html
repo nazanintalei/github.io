@@ -332,6 +332,8 @@ nav.scrolled .nav-links a:hover { color: var(--black); }
   letter-spacing: -0.5px;
   color: white;
   margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 2;
 }
 .hero-sub {
   font-size: 14px; font-weight: 300;
@@ -2430,21 +2432,8 @@ nav.scrolled .nav-cta-btn { color: var(--black); border-color: var(--border); }
   }, 2800);
 })();
 
-// ── PARALLAX on hero heading ──
-(function() {
-  var el = document.querySelector('.hero-parallax');
-  var hero = document.querySelector('.hero');
-  if (!el || !hero) return;
-  // Disable on mobile — causes overlap
-  if (window.innerWidth < 960) return;
-  window.addEventListener('scroll', function() {
-    var scrolled = window.scrollY;
-    var heroH = hero.offsetHeight;
-    if (scrolled > heroH) return;
-    var rate = scrolled * 0.18;
-    el.style.transform = 'translateY(' + rate + 'px)';
-  }, { passive: true });
-})();
+// ── PARALLAX disabled — word reveal + glitch effects are sufficient ──
+// (parallax caused heading to overlap subtitle on scroll)
 
 // Nav scroll
 var nav = document.getElementById('nav');
